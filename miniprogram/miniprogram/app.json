@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/archive/index",
+    "pages/community/index",
+    "pages/ai/index",
+    "pages/profile/index"
+  ],
+  "subPackages": [
+    {
+      "root": "package-vault",
+      "pages": ["pages/index/index", "pages/manage/index", "pages/detail/index"]
+    },
+    {
+      "root": "package-adoption",
+      "pages": ["pages/index/index"]
+    },
+    {
+      "root": "package-community",
+      "pages": ["pages/index/index", "pages/cat-detail/index", "pages/post-detail/index"]
+    },
+    {
+      "root": "package-account",
+      "pages": ["pages/index/index", "pages/notifications/index", "pages/auth/index"]
+    },
+    {
+      "root": "package-tools",
+      "pages": ["pages/index/index", "pages/tasks/index"]
+    }
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#fffaf8",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#fffaf8",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#675e60",
+    "selectedColor": "#8b3f55",
+    "backgroundColor": "#fffaf8",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/home/index", "text": "首页" },
+      { "pagePath": "pages/archive/index", "text": "档案" },
+      { "pagePath": "pages/community/index", "text": "社区" },
+      { "pagePath": "pages/ai/index", "text": "AI" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "uploadFile": 30000,
+    "downloadFile": 30000
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

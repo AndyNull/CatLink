@@ -1,0 +1,19 @@
+<view class="page page--compact page--subpage task-page">
+  <view class="page__lead">
+    <text class="page__eyebrow">RESCUE TASKS</text>
+    <text class="page__title">近期待办</text>
+    <text class="page__summary">完成回访、更新治疗状态或继续领养沟通后，待办会自动变化。</text>
+  </view>
+
+  <view class="task-filters"><view wx:for="{{filters}}" wx:key="value" class="task-filter {{activeFilter === item.value ? 'task-filter--active' : ''}}" data-filter="{{item.value}}" role="button" bindtap="selectFilter" hover-class="task-control--pressed">{{item.label}}</view></view>
+
+  <view wx:if="{{visibleTasks.length}}" class="task-list">
+    <view class="task-row" wx:for="{{visibleTasks}}" wx:key="id" data-id="{{item.id}}" role="button" bindtap="openTask" hover-class="task-control--pressed">
+      <view class="task-row__badge tone--{{item.tone}}" role="img" aria-label="{{item.kindLabel}}"><image src="{{item.icon}}" mode="aspectFit" /></view>
+      <view class="task-row__copy"><text class="task-row__title">{{item.title}}</text><text class="task-row__detail">{{item.detail}}</text></view>
+      <view class="task-row__end"><text class="task-row__date {{item.overdue ? 'task-row__date--due' : ''}}">{{item.dueLabel}}</text><text class="task-row__arrow">›</text></view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-panel task-empty"><image class="empty-panel__logo" src="/assets/logo.png" mode="aspectFit" /><text class="empty-panel__title">这一栏暂时为空</text><text class="empty-panel__body">建立治疗、领养或回访记录后，这里会生成下一步事项。</text></view>
+</view>

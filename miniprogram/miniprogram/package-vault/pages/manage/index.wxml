@@ -1,0 +1,52 @@
+<view class="page page--compact page--subpage manage-page">
+  <view class="page__lead">
+    <text class="page__eyebrow">PRIVATE VAULT</text>
+    <text class="page__title">档案与回收站</text>
+    <text class="page__summary">管理档案状态，误删内容可在回收站恢复。</text>
+  </view>
+
+  <view class="manage-tabs">
+    <view class="manage-tab {{activeTab === 'vault' ? 'manage-tab--active' : ''}}" data-tab="vault" role="button" bindtap="selectTab">档案 {{drafts.length}}</view>
+    <view class="manage-tab {{activeTab === 'trash' ? 'manage-tab--active' : ''}}" data-tab="trash" role="button" bindtap="selectTab">回收站 {{trash.length}}</view>
+  </view>
+
+  <view wx:if="{{activeTab === 'vault'}}" class="manage-content">
+    <view wx:if="{{drafts.length}}" class="manage-list">
+      <view class="manage-row" wx:for="{{drafts}}" wx:key="id" data-id="{{item.id}}" role="button" bindtap="openDraft">
+        <image wx:if="{{item.coverPath}}" class="manage-row__cover" src="{{item.coverPath}}" mode="aspectFill" lazy-load />
+        <view wx:else class="manage-row__cover manage-row__cover--empty">爪</view>
+        <view class="manage-row__body">
+          <text class="manage-row__name">{{item.nickname}}</text>
+          <text class="manage-row__meta">{{item.statusLabel}} · {{item.region || '地点待补充'}}</text>
+          <view class="manage-row__actions"><view class="manage-row__delete" data-id="{{item.id}}" role="button" catchtap="moveToTrash">移入回收站</view></view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-panel manage-empty">
+      <text class="empty-panel__title">还没有档案</text>
+      <text class="empty-panel__body">建立第一份档案后，会在这里统一管理。</text>
+    </view>
+    <view class="manage-primary" role="button" bindtap="goNew" hover-class="manage-primary--pressed">新建档案</view>
+  </view>
+
+  <view wx:else class="manage-content">
+    <view wx:if="{{trash.length}}" class="manage-list">
+      <view class="manage-row manage-row--trash" wx:for="{{trash}}" wx:key="id">
+        <image wx:if="{{item.draft.coverPath}}" class="manage-row__cover" src="{{item.draft.coverPath}}" mode="aspectFill" lazy-load />
+        <view wx:else class="manage-row__cover manage-row__cover--empty">爪</view>
+        <view class="manage-row__body">
+          <text class="manage-row__name">{{item.draft.nickname}}</text>
+          <text class="manage-row__meta">{{item.statusLabel}} · {{item.deletedLabel}}移入</text>
+          <view class="manage-row__actions">
+            <view class="manage-row__restore" data-id="{{item.draft.id}}" role="button" bindtap="restore">恢复</view>
+            <view class="manage-row__delete" data-id="{{item.draft.id}}" role="button" bindtap="removeForever">删除</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-panel manage-empty">
+      <text class="empty-panel__title">回收站为空</text>
+      <text class="empty-panel__body">移入回收站的档案会保留在这里，直到你主动彻底删除。</text>
+    </view>
+  </view>
+</view>

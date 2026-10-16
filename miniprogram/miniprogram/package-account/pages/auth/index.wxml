@@ -1,0 +1,46 @@
+<view class="page page--compact page--subpage auth-page">
+  <view class="page__lead">
+    <text class="page__eyebrow">CATLINK ACCOUNT</text>
+    <text class="page__title">连接你的救助记录</text>
+    <text class="page__summary">登录后可同步公开互动、消息和个人资料。</text>
+  </view>
+
+  <view class="auth-tabs">
+    <view class="auth-tab {{mode === 'login' ? 'auth-tab--active' : ''}}" data-mode="login" role="button" bindtap="selectMode">登录</view>
+    <view class="auth-tab {{mode === 'register' ? 'auth-tab--active' : ''}}" data-mode="register" role="button" bindtap="selectMode">注册</view>
+    <view class="auth-tab {{mode === 'verify' ? 'auth-tab--active' : ''}}" data-mode="verify" role="button" bindtap="selectMode">验证邮箱</view>
+  </view>
+
+  <view wx:if="{{mode === 'login'}}" class="wechat-auth">
+    <view class="wechat-submit {{loading ? 'auth-submit--loading' : ''}}" role="button" bindtap="submitWechatLogin">微信一键登录</view>
+    <view class="auth-divider"><view></view><text>或使用邮箱登录</text><view></view></view>
+  </view>
+
+  <view class="auth-card">
+    <view class="auth-field">
+      <text class="auth-field__label">邮箱</text>
+      <input value="{{email}}" type="text" maxlength="120" placeholder="name@example.com" placeholder-style="color:#aaa1a2" data-field="email" bindinput="updateField" />
+    </view>
+
+    <view wx:if="{{mode !== 'verify'}}" class="auth-field">
+      <text class="auth-field__label">密码</text>
+      <input value="{{password}}" password maxlength="128" placeholder="输入账号密码" placeholder-style="color:#aaa1a2" data-field="password" bindinput="updateField" />
+      <text wx:if="{{mode === 'register'}}" class="auth-field__hint">8-128 位，至少包含三类字符</text>
+    </view>
+
+    <view wx:if="{{mode === 'login' && captchaRequired}}" class="auth-field">
+      <view class="auth-field__head"><text class="auth-field__label">图形验证码</text><text class="auth-field__sub">{{captchaLength}} 位</text></view>
+      <view class="captcha-row">
+        <input value="{{captcha}}" maxlength="{{captchaLength}}" placeholder="输入图中字符" placeholder-style="color:#aaa1a2" data-field="captcha" bindinput="updateField" />
+        <view class="captcha-image" role="button" bindtap="refreshCaptcha"><image wx:if="{{captchaImage}}" src="{{captchaImage}}" mode="aspectFit" /><text wx:else>{{refreshingCaptcha ? '加载中' : '刷新验证码'}}</text></view>
+      </view>
+    </view>
+
+    <view wx:if="{{mode === 'verify'}}" class="auth-field">
+      <view class="auth-field__head"><text class="auth-field__label">邮箱验证码</text><text class="auth-field__sub" role="button" bindtap="resendCode">重新发送</text></view>
+      <input value="{{captcha}}" maxlength="12" placeholder="输入邮箱中的验证码" placeholder-style="color:#aaa1a2" data-field="captcha" bindinput="updateField" />
+    </view>
+  </view>
+
+  <view class="auth-submit {{loading ? 'auth-submit--loading' : ''}}" role="button" bindtap="submit">{{mode === 'login' ? '登录' : mode === 'register' ? '创建账号' : '完成验证'}}</view>
+</view>

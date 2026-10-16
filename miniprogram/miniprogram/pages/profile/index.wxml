@@ -1,0 +1,39 @@
+<view class="page page--compact profile-page">
+  <view class="page__lead">
+    <text class="page__eyebrow">MY CATLINK</text>
+    <text class="page__title">我的</text>
+    <text class="page__summary">管理档案协作和个人设置。</text>
+  </view>
+
+  <view class="profile-card" role="button" bindtap="goAccount">
+    <image wx:if="{{avatarUrl}}" class="profile-card__avatar profile-card__avatar--image" src="{{avatarUrl}}" mode="aspectFill" />
+    <view wx:else class="profile-card__avatar"><image class="profile-card__avatar-logo" src="/assets/logo.png" mode="aspectFit" /></view>
+    <view class="profile-card__body">
+      <text class="profile-card__name">{{displayName}}</text>
+      <text class="profile-card__meta">{{profileMeta}}</text>
+    </view>
+    <text class="profile-card__action">{{profileAction}}</text>
+  </view>
+
+  <view class="profile-badges">
+    <view class="profile-badges__item" wx:for="{{metrics}}" wx:key="label"><text class="profile-badges__value">{{item.value}}</text><text class="profile-badges__label">{{item.label}}</text></view>
+  </view>
+
+  <view class="section">
+    <text class="section__title">工作台</text>
+    <view class="menu-group">
+      <navigator class="list-row" url="/package-vault/pages/manage/index?tab=vault"><view class="list-row__main"><view class="list-row__icon"><image src="/assets/icons/archive.svg" mode="aspectFit" /></view><text>档案管理</text></view><text class="list-row__arrow">›</text></navigator>
+<navigator class="list-row" url="/package-vault/pages/manage/index?tab=trash"><view class="list-row__main"><view class="list-row__icon tone--neutral"><image src="/assets/icons/trash.svg" mode="aspectFit" /></view><text>回收站</text></view><text class="list-row__arrow">›</text></navigator>
+      <navigator class="list-row" url="/package-adoption/pages/index/index"><view class="list-row__main"><view class="list-row__icon tone--apricot"><image src="/assets/icons/action-adoption.svg" mode="aspectFit" /></view><text>领养人和回访</text></view><text class="list-row__arrow">›</text></navigator>
+      <navigator class="list-row" url="/package-tools/pages/index/index"><view class="list-row__main"><view class="list-row__icon tone--mint"><image src="/assets/icons/stat-rescued.svg" mode="aspectFit" /></view><text>统计与海报</text></view><text class="list-row__arrow">›</text></navigator>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="section__title">设置</text>
+    <view class="menu-group">
+<navigator class="list-row" url="/package-tools/pages/index/index?tab=settings"><view class="list-row__main"><view class="list-row__icon"><image src="/assets/icons/theme.svg" mode="aspectFit" /></view><text>外观主题</text></view><text class="list-row__arrow">›</text></navigator>
+      <navigator class="list-row" url="/package-account/pages/index/index?panel=account"><view class="list-row__main"><view class="list-row__icon tone--neutral"><image src="/assets/icons/profile.svg" mode="aspectFit" /></view><text>账号与安全</text></view><text class="list-row__arrow">›</text></navigator>
+    </view>
+  </view>
+</view>

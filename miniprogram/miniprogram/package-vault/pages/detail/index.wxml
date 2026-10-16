@@ -1,0 +1,59 @@
+<view class="page page--compact page--subpage vault-detail-page">
+  <view wx:if="{{draft}}" class="detail-content">
+    <view class="detail-media" role="button" data-src="{{draft.coverPath}}" bindtap="previewImage">
+      <image wx:if="{{draft.coverPath}}" class="detail-media__image" src="{{draft.coverPath}}" mode="aspectFill" />
+      <view wx:else class="detail-media__empty">爪</view>
+      <text class="detail-media__status detail-media__status--{{draft.status}}">{{draft.statusLabel}}</text>
+    </view>
+
+    <view class="detail-heading">
+      <view>
+        <text class="page__eyebrow">PRIVATE VAULT</text>
+        <text class="detail-heading__title">{{draft.nickname}}</text>
+        <text class="detail-heading__meta">{{draft.region || '地点待补充'}}</text>
+      </view>
+      <view class="detail-edit" role="button" bindtap="editDraft">编辑</view>
+    </view>
+
+    <view class="detail-actions">
+      <view wx:if="{{draft.canManageAdoption}}" class="detail-action detail-action--primary" role="button" bindtap="openAdoption">领养与回访</view>
+      <view class="detail-action {{draft.canManageAdoption ? 'detail-action--secondary' : 'detail-action--full'}}" role="button" bindtap="editDraft">修改档案</view>
+    </view>
+
+    <view class="detail-section">
+      <text class="detail-section__title">基本资料</text>
+      <view class="detail-facts">
+        <view class="detail-fact" wx:for="{{draft.facts}}" wx:key="label"><text class="detail-fact__label">{{item.label}}</text><text class="detail-fact__value">{{item.value}}</text></view>
+      </view>
+    </view>
+
+    <view wx:if="{{draft.healthSummary}}" class="detail-section">
+      <text class="detail-section__title">健康状况</text>
+      <text class="detail-copy detail-copy--story">{{draft.healthSummary}}</text>
+    </view>
+
+    <view wx:if="{{draft.personality || draft.tags.length}}" class="detail-section">
+      <text class="detail-section__title">性格与标签</text>
+      <text wx:if="{{draft.personality}}" class="detail-copy">{{draft.personality}}</text>
+      <view wx:if="{{draft.tags.length}}" class="detail-tags"><text class="detail-tag" wx:for="{{draft.tags}}" wx:key="*this">{{item}}</text></view>
+    </view>
+
+    <view wx:if="{{draft.story}}" class="detail-section">
+      <text class="detail-section__title">救助故事</text>
+      <text class="detail-copy detail-copy--story">{{draft.story}}</text>
+    </view>
+
+    <view wx:if="{{draft.albumPaths.length}}" class="detail-section">
+      <text class="detail-section__title">相册</text>
+      <view class="detail-gallery"><image class="detail-gallery__image" wx:for="{{draft.albumPaths}}" wx:key="*this" src="{{item}}" mode="aspectFill" data-src="{{item}}" bindtap="previewImage" /></view>
+    </view>
+
+    <view class="detail-danger" role="button" bindtap="moveToTrash">移入回收站</view>
+  </view>
+
+  <view wx:else class="empty-panel detail-empty">
+    <image class="empty-panel__logo" src="/assets/logo.png" mode="aspectFit" />
+    <text class="empty-panel__title">这份档案已不在列表中</text>
+    <navigator class="primary-action" url="/package-vault/pages/manage/index">打开档案管理</navigator>
+  </view>
+</view>

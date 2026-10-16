@@ -1,0 +1,9 @@
+.profile-badges { display: flex; padding: 10rpx 8rpx; justify-content: space-around; }
+.profile-badges__item { display: flex; flex: 1; flex-direction: column; align-items: center; gap: 2rpx; border-right: 1rpx solid #e5ddda; }
+.profile-badges__item:last-child { border-right: 0; }
+.profile-badges__value { font-size: 34rpx; font-weight: 650; font-variant-numeric: tabular-nums; }
+.profile-badges__label { color: #82787c; font-size: 22rpx; }
+.profile-card__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile-card__meta { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.profile-card__avatar--image { object-fit: cover; }
+.profile-card__avatar-logo { width: 68rpx; height: 68rpx; }

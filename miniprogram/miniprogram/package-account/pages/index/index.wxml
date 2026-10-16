@@ -1,0 +1,50 @@
+<view class="page page--compact page--subpage account-page">
+  <view class="page__lead">
+    <text class="page__eyebrow">PROFILE & ACCOUNT</text>
+    <text class="page__title">个人设置</text>
+    <text class="page__summary">资料、账号和消息都会与 CatLink 账号保持一致。</text>
+  </view>
+
+  <view class="account-tabs">
+    <view class="account-tab {{activePanel === 'profile' ? 'account-tab--active' : ''}}" data-panel="profile" role="button" bindtap="selectPanel">资料</view>
+    <view class="account-tab {{activePanel === 'account' ? 'account-tab--active' : ''}}" data-panel="account" role="button" bindtap="selectPanel">账号</view>
+  </view>
+
+  <view wx:if="{{activePanel === 'profile'}}" class="account-panel">
+    <view class="account-form">
+      <view class="account-field">
+        <text class="account-field__label">昵称 <text class="account-field__required">*</text></text>
+        <input value="{{nickname}}" maxlength="30" placeholder="方便协作时识别" placeholder-style="color:#a79da0" data-field="nickname" bindinput="updateTextField" />
+      </view>
+      <view class="account-field">
+        <text class="account-field__label">用户名</text>
+        <input value="{{username}}" disabled="{{!usernameEditable}}" maxlength="18" placeholder="6-18位字母或数字" placeholder-style="color:#a79da0" data-field="username" bindinput="updateTextField" />
+        <text class="account-field__hint">{{usernameEditable ? '用户名仅可修改一次' : '用户名已确认，暂不可再修改'}}</text>
+      </view>
+      <view class="account-field account-field--intro">
+        <text class="account-field__label">用户称号</text>
+        <textarea value="{{profileTitle}}" maxlength="80" auto-height placeholder="例如：街区救助志愿者" placeholder-style="color:#a79da0" data-field="profileTitle" bindinput="updateTextField" />
+      </view>
+    </view>
+    <view class="account-save {{loading ? 'account-save--loading' : ''}}" role="button" bindtap="saveProfile" hover-class="account-save--pressed">保存资料</view>
+
+    <navigator class="account-link" url="/package-account/pages/notifications/index">
+      <image class="account-link__icon" src="/assets/icons/notification.svg" mode="aspectFit" />
+      <view class="account-link__copy"><text class="account-link__title">消息中心</text><text class="account-link__body">查看公告、互动和救助提醒</text></view>
+      <text class="account-link__arrow">›</text>
+    </navigator>
+  </view>
+
+  <view wx:else class="account-panel">
+    <view class="privacy-list">
+      <view class="privacy-row">
+        <view class="privacy-row__copy"><text class="privacy-row__title">登录邮箱</text><text class="privacy-row__body">{{email}}</text></view>
+        <text class="account-status {{emailVerified ? 'account-status--ok' : ''}}">{{emailVerified ? '已验证' : '待验证'}}</text>
+      </view>
+      <view class="privacy-row">
+        <view class="privacy-row__copy"><text class="privacy-row__title">当前设备</text><text class="privacy-row__body">登录令牌将在到期前自动刷新。</text></view>
+      </view>
+    </view>
+    <view class="account-logout" role="button" bindtap="logout">退出当前账号</view>
+  </view>
+</view>

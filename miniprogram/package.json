@@ -1,0 +1,13 @@
+{
+  "name": "catlink-miniprogram",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "verify": "pnpm run typecheck && node scripts/verify-project.mjs"
+  },
+  "devDependencies": {
+    "miniprogram-api-typings": "^5.2.3",
+    "typescript": "^5.9.2"
+  }
+}

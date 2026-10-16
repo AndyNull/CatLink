@@ -1,0 +1,139 @@
+<view class="page page--compact community-page">
+  <view class="community-lead-row">
+    <view class="page__lead">
+      <text class="page__eyebrow">RESCUE COMMUNITY</text>
+      <text class="page__title">社区</text>
+      <text class="page__summary">发现公开档案，记录救助进展与领养信息。</text>
+    </view>
+    <view wx:if="{{activeFeed !== '公开'}}" class="community-publish" role="button" aria-label="发布动态" bindtap="goPublish" hover-class="community-control--pressed">+</view>
+  </view>
+
+  <view class="search-box community-search">
+    <text class="search-box__icon">⌕</text>
+    <input value="{{query}}" placeholder="搜索猫咪或动态" confirm-type="search" bindinput="updateQuery" bindconfirm="search" />
+    <view wx:if="{{query}}" class="community-search__clear" role="button" aria-label="清空搜索" bindtap="clearQuery">×</view>
+  </view>
+
+  <view class="community-filter">
+    <view class="community-filter__toolbar">
+      <view class="community-filter__feeds">
+        <view
+          wx:for="{{feeds}}"
+          wx:key="*this"
+          data-feed="{{item}}"
+          class="community-filter__feed {{activeFeed === item ? 'community-filter__feed--active' : ''}}"
+          role="button"
+          aria-label="切换到{{item}}"
+          bindtap="selectFeed"
+          hover-class="community-control--pressed"
+        >{{item}}</view>
+      </view>
+      <view
+        class="community-filter__category-trigger community-filter__category-trigger--active"
+        role="button"
+        aria-label="选择分类，当前{{activeCategoryLabel}}"
+        bindtap="openCategorySheet"
+        hover-class="community-control--pressed"
+      >
+        <text>{{activeCategoryLabel}}</text>
+        <text class="community-filter__chevron">⌄</text>
+      </view>
+    </view>
+    <view wx:if="{{categoryOpen}}" class="community-category-menu">
+      <view wx:for="{{categoryOptions}}" wx:key="value" class="community-category-option {{activeCategory === item.value ? 'community-category-option--active' : ''}}" data-category="{{item.value}}" role="button" bindtap="selectCategory" hover-class="community-control--pressed">
+        <text>{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{errorMessage && hasResults}}" class="community-inline-error">
+    <text>{{errorMessage}}</text>
+    <view role="button" bindtap="search">重试</view>
+  </view>
+
+  <view wx:if="{{isLoading}}" class="community-loading">
+    <image src="/assets/logo.png" mode="aspectFit" />
+    <text>正在加载</text>
+  </view>
+
+  <block wx:elif="{{hasResults}}">
+    <view wx:if="{{isPublicFeed}}" class="community-cat-list">
+      <view
+        wx:for="{{publicCats}}"
+        wx:key="id"
+        class="community-cat"
+        data-id="{{item.id}}"
+        role="button"
+        aria-label="打开{{item.displayName}}的公开档案"
+        bindtap="goCatDetail"
+        hover-class="community-control--pressed"
+      >
+        <image wx:if="{{item.cover}}" class="community-cat__cover" src="{{item.cover}}" mode="aspectFill" lazy-load />
+        <view wx:else class="community-cat__cover community-cat__cover--fallback">
+          <image src="/assets/logo.png" mode="aspectFit" />
+        </view>
+        <view class="community-cat__body">
+          <view class="community-cat__headline">
+            <text class="community-cat__name">{{item.displayName}}</text>
+            <text class="community-cat__status">{{item.statusLabel}}</text>
+          </view>
+          <text class="community-cat__meta">{{item.metaLabel}}</text>
+          <view class="community-cat__footer">
+            <text>{{item.locationLabel}}</text>
+            <text>{{item.updatedLabel}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="community-feed">
+      <view
+        wx:for="{{posts}}"
+        wx:key="id"
+        class="community-post"
+        data-id="{{item.id}}"
+        role="button"
+        aria-label="打开{{item.title}}"
+        bindtap="goPostDetail"
+        hover-class="community-control--pressed"
+      >
+        <view class="community-post__header">
+          <view class="community-post__author">
+            <view class="community-post__avatar">{{item.authorInitial}}</view>
+            <view>
+              <text class="community-post__author-name">{{item.authorName}}</text>
+              <text class="community-post__location">{{item.locationLabel}}</text>
+            </view>
+          </view>
+          <text class="community-post__time">{{item.createdLabel}}</text>
+        </view>
+        <view class="community-post__topic community-post__topic--{{item.topic}}">{{item.topicLabel}}</view>
+        <text class="community-post__title">{{item.title}}</text>
+        <text class="community-post__body">{{item.bodyPreview}}</text>
+        <image wx:if="{{item.cover}}" class="community-post__image" src="{{item.cover}}" mode="aspectFill" lazy-load />
+        <view class="community-post__footer">
+          <view class="community-post__metric {{item.liked ? 'community-post__metric--liked' : ''}}" data-id="{{item.id}}" role="button" aria-label="点赞" catchtap="likePost" hover-stop-propagation="true">
+            <text>{{item.liked ? '已赞' : '点赞'}}</text>
+            <text>{{item.likeCount}}</text>
+          </view>
+          <view class="community-post__metric">
+            <text>评论</text>
+            <text>{{item.commentCount}}</text>
+          </view>
+          <text class="community-post__open">查看详情 ›</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{hasMore}}" class="community-more" role="button" bindtap="loadMore" hover-class="community-control--pressed">{{isLoadingMore ? '正在加载...' : '加载更多'}}</view>
+  </block>
+
+  <view wx:else class="empty-panel community-empty">
+    <image class="community-empty__logo" src="/assets/logo.png" mode="aspectFit" />
+    <text class="empty-panel__title">{{errorMessage || emptyTitle}}</text>
+    <text class="empty-panel__body">{{errorMessage ? '请检查网络后重试。' : emptyBody}}</text>
+    <view wx:if="{{needsLogin}}" class="secondary-action community-empty__action" role="button" bindtap="goLogin" hover-class="community-control--pressed">登录后查看</view>
+    <view wx:elif="{{errorMessage}}" class="secondary-action community-empty__action" role="button" bindtap="search" hover-class="community-control--pressed">重新加载</view>
+    <view wx:elif="{{activeFeed !== '公开'}}" class="secondary-action community-empty__action" role="button" bindtap="goPublish" hover-class="community-control--pressed">发布动态</view>
+  </view>
+</view>

@@ -1,0 +1,82 @@
+<view class="page page--compact page--subpage post-detail-page">
+  <view class="page__lead post-detail-lead">
+    <text class="page__eyebrow">COMMUNITY POST</text>
+    <text class="page__title">动态详情</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="detail-loading">
+    <image src="/assets/logo.png" mode="aspectFit" />
+    <text>正在加载动态</text>
+  </view>
+
+  <view wx:elif="{{errorMessage}}" class="empty-panel detail-empty">
+    <image class="detail-empty__logo" src="/assets/logo.png" mode="aspectFit" />
+    <text class="empty-panel__title">{{errorMessage}}</text>
+    <view class="secondary-action detail-empty__action" role="button" bindtap="loadDetail">重新加载</view>
+  </view>
+
+  <block wx:elif="{{post}}">
+    <view class="post-detail__card">
+      <view class="post-detail__author-row">
+        <view class="post-detail__avatar">{{post.authorInitial}}</view>
+        <view class="post-detail__author-copy">
+          <text class="post-detail__author-name">{{post.authorName}}</text>
+          <text class="post-detail__location">{{post.locationLabel}}</text>
+        </view>
+        <text class="post-detail__time">{{post.createdLabel}}</text>
+      </view>
+      <text class="post-detail__topic post-detail__topic--{{post.topic}}">{{post.topicLabel}}</text>
+      <text class="post-detail__title">{{post.title}}</text>
+      <text class="post-detail__body">{{post.body}}</text>
+      <view wx:if="{{post.media.length}}" class="post-detail__media-grid">
+        <image wx:for="{{post.media}}" wx:key="*this" class="post-detail__media" src="{{item}}" mode="aspectFill" lazy-load />
+      </view>
+      <view class="post-detail__footer">
+        <view
+          class="post-detail__like {{post.liked ? 'post-detail__like--active' : ''}} {{liking ? 'post-detail__like--pending' : ''}}"
+          role="button"
+          aria-label="{{post.liked ? '取消点赞' : '点赞'}}"
+          bindtap="toggleLike"
+        >
+          <text>{{post.liked ? '已赞' : '点赞'}}</text>
+          <text>{{post.likeCount}}</text>
+        </view>
+        <text class="post-detail__comment-count">{{post.commentCount}} 条评论</text>
+      </view>
+    </view>
+
+    <view class="post-detail__comments-section">
+      <view class="post-detail__comments-head">
+        <text class="post-detail__section-title">评论</text>
+        <text class="post-detail__comments-total">{{comments.length}} 条</text>
+      </view>
+
+      <view wx:if="{{comments.length}}" class="post-detail__comment-list">
+        <view wx:for="{{comments}}" wx:key="id" class="post-detail__comment">
+          <view class="post-detail__comment-avatar">{{item.authorInitial}}</view>
+          <view class="post-detail__comment-main">
+            <view class="post-detail__comment-head">
+              <text class="post-detail__comment-name">{{item.authorName}}</text>
+              <text class="post-detail__comment-time">{{item.createdLabel}}</text>
+            </view>
+            <text wx:if="{{item.replyLabel}}" class="post-detail__comment-reply">{{item.replyLabel}}</text>
+            <text class="post-detail__comment-body">{{item.body}}</text>
+            <view class="post-detail__reply-action" data-id="{{item.id}}" data-name="{{item.authorName}}" role="button" bindtap="replyToComment">回复</view>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="post-detail__comments-empty">成为第一个留下回复的人。</view>
+    </view>
+
+    <view class="post-detail__composer-wrap">
+      <view wx:if="{{replyToName}}" class="post-detail__replying">
+        <text>回复 {{replyToName}}</text>
+        <view role="button" aria-label="取消回复" bindtap="cancelReply">取消</view>
+      </view>
+      <view class="post-detail__composer">
+        <textarea value="{{commentDraft}}" focus="{{commentFocus}}" maxlength="1000" auto-height placeholder="写下你的看法" placeholder-style="color:#aaa1a2" bindinput="updateComment" />
+        <view class="post-detail__send {{sending ? 'post-detail__send--pending' : ''}}" role="button" aria-label="发送评论" bindtap="submitComment">发送</view>
+      </view>
+    </view>
+  </block>
+</view>

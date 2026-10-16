@@ -1,0 +1,35 @@
+<view class="page page--compact page--subpage notification-page">
+  <view class="page__lead">
+    <text class="page__eyebrow">NOTIFICATIONS</text>
+    <text class="page__title">消息中心</text>
+    <text class="page__summary">公告、互动和救助提醒会汇总在这里。</text>
+  </view>
+
+  <view wx:if="{{needsLogin}}" class="empty-panel notification-empty">
+    <image class="notification-empty__icon" src="/assets/icons/notification.svg" mode="aspectFit" />
+    <text class="empty-panel__title">登录后查看消息</text>
+    <text class="empty-panel__body">互动和救助提醒会同步到当前账号。</text>
+    <view class="notification-login" role="button" bindtap="openLogin">去登录</view>
+  </view>
+
+  <view wx:elif="{{errorText}}" class="empty-panel notification-empty">
+    <image class="notification-empty__icon" src="/assets/icons/notification.svg" mode="aspectFit" />
+    <text class="empty-panel__title">消息暂时无法加载</text>
+    <text class="empty-panel__body">{{errorText}}</text>
+    <view class="notification-login" role="button" bindtap="loadNotifications">重新加载</view>
+  </view>
+
+  <view wx:elif="{{items.length}}" class="notification-list">
+    <view class="notification-list__header"><text class="section__title">近期消息</text><view wx:if="{{hasUnread}}" class="notification-list__read" role="button" bindtap="markAllRead">全部已读</view></view>
+    <view wx:for="{{items}}" wx:key="id" class="notification-card {{item.read ? '' : 'notification-card--unread'}}" data-id="{{item.id}}" role="button" bindtap="openNotification">
+      <view class="notification-card__dot" />
+      <view class="notification-card__body"><view class="notification-card__head"><text class="notification-card__kind">{{item.kindLabel}}</text><text class="notification-card__time">{{item.timeLabel}}</text></view><text class="notification-card__title">{{item.title}}</text><text wx:if="{{item.body}}" class="notification-card__copy">{{item.body}}</text></view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-panel notification-empty">
+    <image class="notification-empty__icon" src="/assets/icons/notification.svg" mode="aspectFit" />
+    <text class="empty-panel__title">{{loading ? '正在加载消息' : '暂无新通知'}}</text>
+    <text class="empty-panel__body">新的提醒和互动会显示在这里。</text>
+  </view>
+</view>

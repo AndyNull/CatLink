@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-files-path name="catlink_files" path="." />
+    <files-path name="catlink_internal" path="." />
+    <cache-path name="catlink_cache" path="." />
+</paths>

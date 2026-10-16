@@ -1,0 +1,30 @@
+.home-page { gap: 46rpx; }
+.home-action { min-height: 136rpx; }
+.home-action__hint { color: #93888b; font-size: 20rpx; }
+.hero__mark-icon { display: block; width: 38rpx; height: 38rpx; }
+.metric-card__icon image, .action-card__icon image { display: block; width: 36rpx; height: 36rpx; }
+.home-task__badge image { display: block; width: 32rpx; height: 32rpx; }
+.home-task-list { display: flex; flex-direction: column; overflow: hidden; border: 1rpx solid #ebe3e0; border-radius: 28rpx; background: #fffdfc; }
+.home-task { display: flex; min-height: 118rpx; padding: 18rpx 22rpx; align-items: center; gap: 16rpx; border-bottom: 1rpx solid #eee7e4; }
+.home-task:last-child { border-bottom: 0; }
+.home-task:active { opacity: 0.74; transform: scale(0.992); }
+.home-task__badge { display: flex; width: 54rpx; height: 54rpx; flex: none; align-items: center; justify-content: center; border-radius: 18rpx; font-size: 20rpx; font-weight: 650; }
+.home-task__copy { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 2rpx; }
+.home-task__title, .home-task__detail { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.home-task__title { color: #4b4043; font-size: 25rpx; font-weight: 600; }
+.home-task__detail { color: #8c8184; font-size: 20rpx; }
+.home-task__end { display: flex; flex: none; flex-direction: column; align-items: flex-end; gap: 1rpx; }
+.home-task__due { color: #8d8285; font-size: 18rpx; white-space: nowrap; }
+.home-task__due--overdue { color: #a04c57; }
+.home-task__arrow { color: #a49a9d; font-size: 30rpx; line-height: 1; }
+.home-empty { min-height: 250rpx; }
+.home-public-scroll { width: calc(100% + 64rpx); margin: 0 -32rpx; padding: 0 32rpx 8rpx; white-space: nowrap; }
+.home-public-cat { position: relative; display: inline-flex; width: 300rpx; min-height: 278rpx; margin-right: 14rpx; padding: 14rpx; align-items: stretch; vertical-align: top; flex-direction: column; gap: 10rpx; border: 1rpx solid #ebe3e0; border-radius: 24rpx; background: #fffdfc; }
+.home-public-cat:active { opacity: 0.74; transform: scale(0.992); }
+.home-public-cat__cover { width: 100%; height: 174rpx; flex: none; border-radius: 16rpx; background: #f1eae8; }
+.home-public-cat__cover--fallback { display: flex; align-items: center; justify-content: center; }
+.home-public-cat__cover--fallback image { width: 72rpx; height: 72rpx; opacity: 0.72; }
+.home-public-cat__body { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 6rpx; }
+.home-public-cat__name { overflow: hidden; color: #51464a; font-size: 26rpx; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.home-public-cat__status { color: #857a7d; font-size: 21rpx; }
+.home-public-cat__arrow { position: absolute; right: 22rpx; bottom: 20rpx; color: #a49a9d; font-size: 30rpx; }

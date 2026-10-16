@@ -1,0 +1,85 @@
+name: catlink
+
+services:
+  backend:
+    build:
+      context: ./backend
+      args:
+        GOPROXY: ${GOPROXY:-https://proxy.golang.org,direct}
+    image: catlink-admin-next-backend:local
+    container_name: catlink-admin-next-backend
+    restart: unless-stopped
+    init: true
+    environment:
+      TZ: Asia/Shanghai
+      CATLINK_ADMIN_DATABASE_SOURCE: ${CATLINK_ADMIN_DATABASE_SOURCE:?required}
+      CATLINK_ADMIN_JWT_SECRET: ${CATLINK_ADMIN_JWT_SECRET:?required}
+      CATLINK_JWT_SIGNING_KEY: ${CATLINK_JWT_SIGNING_KEY:?required}
+      CATLINK_DATA_MASTER_KEY: ${CATLINK_DATA_MASTER_KEY:?required}
+      CATLINK_CONFIG_MASTER_KEY: ${CATLINK_CONFIG_MASTER_KEY:?required}
+      CATLINK_BRICK_SIGNING_PUBLIC_KEY: ${CATLINK_BRICK_SIGNING_PUBLIC_KEY:-}
+      CATLINK_ALLOW_UNSIGNED_BRICKS: ${CATLINK_ALLOW_UNSIGNED_BRICKS:-false}
+      CATLINK_STORAGE_LOCAL_PATH: /app/uploads
+    volumes:
+      - catlink_uploads:/app/uploads
+      - catlink_admin_uploads:/app/static/uploadfile
+      - catlink_logs:/app/log
+      - catlink_config:/app/config-data
+    networks: [catlink, onepanel]
+    expose: ["8000"]
+    healthcheck:
+      test: [CMD, wget, -qO-, http://127.0.0.1:8000/readyz]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 60s
+
+  worker:
+    image: catlink-admin-next-backend:local
+    pull_policy: never
+    container_name: catlink-admin-next-worker
+    restart: unless-stopped
+    init: true
+    command: [worker]
+    environment:
+      TZ: Asia/Shanghai
+      CATLINK_ADMIN_DATABASE_SOURCE: ${CATLINK_ADMIN_DATABASE_SOURCE:?required}
+      CATLINK_ADMIN_JWT_SECRET: ${CATLINK_ADMIN_JWT_SECRET:?required}
+      CATLINK_JWT_SIGNING_KEY: ${CATLINK_JWT_SIGNING_KEY:?required}
+      CATLINK_DATA_MASTER_KEY: ${CATLINK_DATA_MASTER_KEY:?required}
+      CATLINK_CONFIG_MASTER_KEY: ${CATLINK_CONFIG_MASTER_KEY:?required}
+      CATLINK_BRICK_SIGNING_PUBLIC_KEY: ${CATLINK_BRICK_SIGNING_PUBLIC_KEY:-}
+      CATLINK_ALLOW_UNSIGNED_BRICKS: ${CATLINK_ALLOW_UNSIGNED_BRICKS:-false}
+      CATLINK_STORAGE_LOCAL_PATH: /app/uploads
+    volumes:
+      - catlink_uploads:/app/uploads
+      - catlink_logs:/app/log
+      - catlink_config:/app/config-data
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks: [catlink, onepanel]
+
+  web:
+    build: ./web
+    image: catlink-admin-next-web:local
+    container_name: catlink-admin-next-web
+    restart: unless-stopped
+    ports:
+      - "${CATLINK_BIND_ADDRESS:-127.0.0.1}:${CATLINK_HTTP_PORT:-58888}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks: [catlink]
+
+networks:
+  catlink:
+  onepanel:
+    external: true
+    name: ${CATLINK_1PANEL_NETWORK:-1panel-network}
+
+volumes:
+  catlink_uploads:
+  catlink_admin_uploads:
+  catlink_logs:
+  catlink_config:

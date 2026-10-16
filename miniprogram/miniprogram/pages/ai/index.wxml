@@ -1,0 +1,99 @@
+<view class="page page--compact ai-page {{mode === 'ask' ? 'ai-page--chat' : ''}}">
+  <view class="ai-hero">
+    <image class="ai-hero__logo" src="/assets/logo.png" mode="aspectFit" />
+    <view class="page__lead">
+      <text class="page__eyebrow">WINK · AI PROFILE ASSISTANT</text>
+      <text class="page__title">AI 助手</text>
+      <text class="page__summary">可以提问照护问题，也可以把现场信息整理成档案。</text>
+    </view>
+  </view>
+
+  <view class="ai-mode-row">
+    <view class="ai-mode {{mode === 'profile' ? 'ai-mode--active' : ''}}" data-mode="profile" role="button" bindtap="selectMode" hover-class="ai-prompt--pressed">AI 建档</view>
+    <view class="ai-mode {{mode === 'ask' ? 'ai-mode--active' : ''}}" data-mode="ask" role="button" bindtap="selectMode" hover-class="ai-prompt--pressed">问答助手</view>
+  </view>
+
+  <view wx:if="{{mode === 'profile'}}" class="ai-step-row">
+    <view class="ai-step ai-step--active"><text>01</text><text>描述情况</text></view>
+    <view class="ai-step"><text>02</text><text>生成建议</text></view>
+    <view class="ai-step"><text>03</text><text>带入档案</text></view>
+  </view>
+
+  <view wx:if="{{mode === 'profile'}}" class="ai-input-section">
+    <view class="ai-section-heading">
+      <view>
+        <text class="ai-section-heading__title">现场描述</text>
+        <text class="ai-section-heading__hint">地点、外观、健康、已做处理和性格都可以写。</text>
+      </view>
+      <text class="ai-section-heading__count">{{descriptionCount}} / 4000</text>
+    </view>
+    <textarea
+      class="ai-description"
+      value="{{description}}"
+      maxlength="4000"
+      auto-height
+      placeholder="例如：在小区花坛发现一只橘白幼猫，约三个月大，右前腿轻微擦伤，精神尚可..."
+      placeholder-style="color:#a79da0"
+      bindinput="updateDescription"
+    />
+  </view>
+
+  <view wx:if="{{mode === 'profile'}}" class="ai-prompts">
+    <text class="ai-prompts__title">快速填入</text>
+    <scroll-view class="ai-prompt-scroll" scroll-x enhanced show-scrollbar="false">
+      <view wx:for="{{prompts}}" wx:key="title" class="ai-prompt" data-prompt="{{item.query}}" role="button" bindtap="selectPrompt" hover-class="ai-prompt--pressed">
+        <text class="ai-prompt__title">{{item.title}}</text>
+        <text class="ai-prompt__body">{{item.description}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view wx:else class="ai-chat">
+    <view class="ai-chat-toolbar">
+      <view class="ai-session-trigger" role="button" bindtap="toggleSessionMenu"><text>{{activeSessionTitle}}</text><text>⌄</text></view>
+      <view class="ai-new-session {{!messages.length ? 'ai-new-session--disabled' : ''}}" role="button" bindtap="createChatSession">新会话</view>
+      <view wx:if="{{sessionMenuOpen}}" class="ai-session-menu">
+        <view wx:for="{{chatSessions}}" wx:key="id" class="ai-session-item {{activeSessionId === item.id ? 'ai-session-item--active' : ''}}" data-id="{{item.id}}" role="button" bindtap="selectChatSession"><text>{{item.title}}</text><view class="ai-session-delete" data-id="{{item.id}}" role="button" aria-label="删除会话" catchtap="deleteChatSession">×</view></view>
+      </view>
+    </view>
+    <scroll-view class="ai-message-list" scroll-y enhanced show-scrollbar="false" scroll-into-view="{{scrollIntoView}}">
+      <view wx:if="{{!messages.length}}" class="ai-chat-empty"><image src="/assets/logo.png" mode="aspectFit" /><text>开始一次新的对话</text><text>可以询问救助、照护、治疗和领养问题。</text></view>
+      <view wx:for="{{messages}}" wx:key="id" id="{{item.id}}" class="ai-message ai-message--{{item.role}}"><view class="ai-message__bubble">{{item.content}}</view></view>
+      <view wx:if="{{answering}}" class="ai-message ai-message--assistant"><view class="ai-message__bubble ai-message__typing">正在思考...</view></view>
+    </scroll-view>
+  </view>
+
+  <view wx:if="{{mode === 'ask'}}" class="ai-chat-composer">
+    <textarea class="ai-chat-input" value="{{question}}" maxlength="1000" auto-height confirm-type="send" placeholder="输入问题" placeholder-style="color:#a79da0" bindinput="updateQuestion" bindconfirm="askQuestion" />
+    <view class="ai-send {{answering || !question ? 'ai-send--disabled' : ''}}" role="button" aria-label="发送问题" bindtap="askQuestion" hover-class="ai-generate--pressed"><image src="/assets/icons/send.svg" mode="aspectFit" /></view>
+  </view>
+
+  <view wx:if="{{mode === 'profile'}}" class="ai-generate {{submitting ? 'ai-generate--disabled' : ''}}" role="button" aria-label="生成档案建议" bindtap="generateProfile" hover-class="ai-generate--pressed">
+    <text>{{submitting ? '正在生成建议...' : '生成档案建议'}}</text>
+    <text class="ai-generate__arrow">→</text>
+  </view>
+
+  <view wx:if="{{errorMessage}}" class="ai-error">
+    <text>{{errorMessage}}</text>
+  </view>
+
+  <view wx:if="{{mode === 'profile' && hasProfile}}" class="ai-result">
+    <view class="ai-result__head">
+      <view>
+        <text class="ai-result__eyebrow">STRUCTURED PROFILE</text>
+        <text class="ai-result__title">建档建议</text>
+      </view>
+      <view class="ai-result__clear" role="button" aria-label="清除建议" bindtap="clearProfile">清除</view>
+    </view>
+    <view class="ai-result__fields">
+      <view wx:for="{{entries}}" wx:key="key" class="ai-result__field">
+        <text class="ai-result__label">{{item.label}}</text>
+        <text class="ai-result__value">{{item.value}}</text>
+      </view>
+    </view>
+    <view class="ai-apply" role="button" bindtap="applyProfile" hover-class="ai-generate--pressed">
+      <text>带入新建档案</text>
+      <text>→</text>
+    </view>
+  </view>
+</view>

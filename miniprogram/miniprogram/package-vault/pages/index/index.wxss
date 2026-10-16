@@ -1,0 +1,46 @@
+.vault-page { gap: 44rpx; }
+.vault-lead { display: flex; align-items: flex-start; justify-content: space-between; gap: 24rpx; }
+.vault-lead .page__lead { flex: 1; }
+.vault-section { gap: 20rpx; }
+
+.cover-picker { position: relative; min-height: 294rpx; overflow: hidden; border: 1rpx dashed #d9c9c8; border-radius: 30rpx; background: #fffdfc; }
+.cover-picker__image { width: 100%; height: 294rpx; }
+.cover-picker__empty { display: flex; min-height: 294rpx; align-items: center; justify-content: center; flex-direction: column; gap: 6rpx; color: #816f74; }
+.cover-picker__mark { display: flex; width: 68rpx; height: 68rpx; align-items: center; justify-content: center; border-radius: 50%; background: #f3e5e8; color: #8b4a5d; font-size: 42rpx; font-weight: 300; }
+.cover-picker__title { margin-top: 8rpx; color: #493f42; font-size: 28rpx; font-weight: 600; }
+.cover-picker__hint { color: #93888b; font-size: 23rpx; }
+.cover-picker__overlay { position: absolute; right: 18rpx; bottom: 18rpx; left: 18rpx; display: flex; min-height: 58rpx; padding: 0 10rpx 0 18rpx; align-items: center; justify-content: space-between; border-radius: 30rpx; background: rgba(50, 39, 42, 0.6); color: #fffaf8; font-size: 23rpx; }
+.cover-picker__remove { display: flex; height: 48rpx; padding: 0 16rpx; align-items: center; border: 1rpx solid rgba(255, 250, 248, 0.55); border-radius: 24rpx; color: #fffaf8; font-size: 22rpx; }
+
+.album-grid { display: flex; flex-wrap: wrap; gap: 14rpx; }
+.album-item, .album-add { position: relative; width: calc((100% - 42rpx) / 4); height: 144rpx; overflow: hidden; border-radius: 18rpx; }
+.album-item { background: #e9dfdc; }
+.album-item__image { width: 100%; height: 100%; }
+.album-item__remove { position: absolute; top: 8rpx; right: 8rpx; display: flex; width: 38rpx; height: 38rpx; align-items: center; justify-content: center; border-radius: 50%; background: rgba(47, 37, 40, 0.7); color: #fffaf8; font-size: 25rpx; line-height: 1; }
+.album-item__cover { position: absolute; right: 8rpx; bottom: 8rpx; left: 8rpx; display: flex; height: 38rpx; align-items: center; justify-content: center; border-radius: 20rpx; background: rgba(47, 37, 40, 0.68); color: #fffaf8; font-size: 19rpx; }
+.album-item__cover--active { background: #8b4a5d; }
+.album-add { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4rpx; border: 1rpx dashed #d8caca; background: #fffdfc; color: #887d80; font-size: 20rpx; }
+.album-add__mark { color: #8b4a5d; font-size: 36rpx; line-height: 1; }
+
+.form-field, .choice-field { display: flex; flex-direction: column; gap: 12rpx; }
+.form-field__label { color: #5b5053; font-size: 25rpx; font-weight: 600; }
+.form-field__required { color: #9b4d5d; }
+.form-field input, .form-field textarea, .date-control { width: 100%; min-height: 88rpx; padding: 0 24rpx; border: 1rpx solid #e3d9d6; border-radius: 24rpx; background: #fffdfc; color: #3a3235; font-size: 27rpx; line-height: 1.5; }
+.form-field textarea { min-height: 184rpx; padding-top: 20rpx; padding-bottom: 20rpx; }
+.form-field__hint { margin-top: -2rpx; color: #93888b; font-size: 21rpx; }
+.date-control { display: flex; align-items: center; justify-content: space-between; }
+.date-control__arrow { color: #a1979a; font-size: 36rpx; }
+
+.choice-scroll { width: 100%; white-space: nowrap; }
+.choice-row { display: flex; gap: 12rpx; }
+.choice-row--single-line { display: inline-flex; padding-right: 32rpx; }
+.choice-row--tight { gap: 8rpx; }
+.choice-chip { display: flex; min-width: 112rpx; height: 58rpx; padding: 0 18rpx; flex: none; align-items: center; justify-content: center; border: 1rpx solid #e3d9d6; border-radius: 29rpx; background: #fffdfc; color: #756c70; font-size: 22rpx; font-weight: 550; white-space: nowrap; }
+.choice-chip--compact { min-width: 0; padding: 0 12rpx; font-size: 21rpx; }
+.choice-chip--active { border-color: #8b4a5d; background: #f3e5e8; color: #7f4355; }
+.form-grid { display: flex; gap: 18rpx; }
+.form-grid__item { min-width: 0; flex: 1; }
+
+.vault-save-area { display: flex; padding-top: 8rpx; flex-direction: column; align-items: center; }
+.vault-save { width: 100%; }
+.vault-save[disabled] { background: #d8c7ca; color: #f9f2f3; }

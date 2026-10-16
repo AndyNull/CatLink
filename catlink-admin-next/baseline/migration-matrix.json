@@ -1,0 +1,806 @@
+[
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/health",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/auth/policy",
+    "status": "native"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/captcha",
+    "status": "native"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": "native"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/register",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/refresh",
+    "status": "native"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/email/verify",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/email/resend",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/password/reset",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/password/reset/confirm",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/encouragements/random",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/public/cats",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/public/cats/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/public/cats/:id/timeline",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/community/feed",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/location/reverse",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/location/ip",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/community/posts/:postId",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/community/posts/:postId/comments",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/users/:accountId/public",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/users/:accountId/public/cats",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/users/:accountId/public/posts",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/share/cats/:code",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/ad/config",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/version/check",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/admin-brand",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/missing-cases",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/media/content/:id/:token",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-logout",
+    "method": "POST",
+    "path": "/api/v1/auth/logout",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/auth/getUserInfo",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/account",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "PATCH",
+    "path": "/api/v1/account",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/account/devices",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "DELETE",
+    "path": "/api/v1/account/devices/:deviceId",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/account/notifications",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/account/notifications/stream",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/account/notifications/read",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/account/safety",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/account/push-devices",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "DELETE",
+    "path": "/api/v1/account/push-devices/:token",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/account/identity",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/auth/notifications",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "PUT",
+    "path": "/api/v1/auth/notifications/read",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/community/feed/following",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/community/posts",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/community/posts/:postId/like",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/community/posts/:postId/bookmarks",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/community/posts/:postId/comments",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "DELETE",
+    "path": "/api/v1/community/posts/:postId",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/community/comments/:commentId/like",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/community/users/:accountId/follow",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/community/users/:accountId/:kind",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/public/cats/:id/timeline",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/community/reports",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/moderation-actions/:actionId/appeals",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/missing-cases",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/missing-cases/:caseId/sightings",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "PUT",
+    "path": "/api/v1/missing-cases/:caseId/close",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/rescue-tasks",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/rescue-tasks",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "PUT",
+    "path": "/api/v1/rescue-tasks/:taskId",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/public/cats",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/public/cats/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "DELETE",
+    "path": "/api/v1/public/cats/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/public/cats/:id/follow",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "DELETE",
+    "path": "/api/v1/public/cats/:id/follow",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/public/me/followed-cats",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/media/upload",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/media/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "DELETE",
+    "path": "/api/v1/media/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/share/media",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/share/cats",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/conversations/start",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/conversations",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/conversations/:conversationId/messages",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/conversations/:conversationId/messages",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/reports",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/share/preview",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/vault/sync",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/vault/enable",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/vault/key-envelope",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/vault/unlock",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/vault/session-key",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/vault/session-key",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "PUT",
+    "path": "/api/v1/vault/key-envelope",
+    "status": "proxy"
+  },
+  {
+    "scope": "app-private",
+    "method": "PUT",
+    "path": "/api/v1/vault/recovery-key",
+    "status": "native"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/ai/cat-profile",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/stats",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/brand",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/brand",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/posts",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/posts/:id/lock",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "DELETE",
+    "path": "/api/v1/moderation/posts/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/cats",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/vault-cats",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/vault-cats/:ownerId/:recordId",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/vault-cats/:ownerId/records",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "DELETE",
+    "path": "/api/v1/moderation/vault-cats/:ownerId/:recordId",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/cats/:id/state",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/cats/:id/visibility",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/reports",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/reports/:id/resolve",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/moderation-appeals",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/moderation-appeals/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/quotes",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "POST",
+    "path": "/api/v1/moderation/quotes",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "POST",
+    "path": "/api/v1/moderation/quotes/import",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/quotes/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "DELETE",
+    "path": "/api/v1/moderation/quotes/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/encouragement-ai/config",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/encouragement-ai/config",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "POST",
+    "path": "/api/v1/moderation/encouragement-ai/test",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/email/config",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/email/config",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "POST",
+    "path": "/api/v1/moderation/email/test",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/email/templates",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/email/templates/:purpose",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/ads",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "POST",
+    "path": "/api/v1/moderation/ads",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/ads/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "DELETE",
+    "path": "/api/v1/moderation/ads/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/versions",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "POST",
+    "path": "/api/v1/moderation/versions",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "DELETE",
+    "path": "/api/v1/moderation/versions/:id",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "POST",
+    "path": "/api/v1/moderation/notifications/broadcast",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/notifications/campaigns",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/notifications/campaigns/:id/withdraw",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/metrics",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/metrics/prometheus",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/retention",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/retention/preview",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "POST",
+    "path": "/api/v1/moderation/retention",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "GET",
+    "path": "/api/v1/moderation/identity-badges",
+    "status": "proxy"
+  },
+  {
+    "scope": "admin",
+    "method": "PUT",
+    "path": "/api/v1/moderation/identity-badges/:id",
+    "status": "proxy"
+  }
+]

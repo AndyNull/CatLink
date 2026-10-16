@@ -1,0 +1,57 @@
+<view class="page page--compact page--subpage adoption-page">
+  <view class="page__lead">
+    <text class="page__eyebrow">ADOPTION FLOW</text>
+    <text class="page__title">领养与回访</text>
+    <text class="page__summary">让领养人、猫咪档案和每次回访保持在同一条记录里。</text>
+  </view>
+
+  <view class="adoption-tabs">
+    <view class="adoption-tab {{activeTab === 'adopters' ? 'adoption-tab--active' : ''}}" data-tab="adopters" role="button" bindtap="selectTab">领养人 {{adopters.length}}</view>
+    <view class="adoption-tab {{activeTab === 'followups' ? 'adoption-tab--active' : ''}}" data-tab="followups" role="button" bindtap="selectTab">回访 {{followUps.length}}</view>
+  </view>
+
+  <view wx:if="{{activeTab === 'adopters'}}" class="adoption-content">
+    <view class="adoption-section__head"><text class="adoption-section__title">录入领养人</text><text class="adoption-section__meta">先关联一份档案</text></view>
+    <view class="adopter-form">
+      <view class="follow-up-picker" role="button" bindtap="chooseAdopterCat"><text class="follow-up-picker__label">关联档案</text><view class="follow-up-picker__value"><text>{{selectedCatName || '选择一份猫咪档案'}}</text><text>›</text></view></view>
+      <view class="adoption-field"><text class="adoption-field__label">称呼</text><input value="{{name}}" maxlength="30" placeholder="领养人称呼" placeholder-style="color:#a79da0" data-field="name" bindinput="updateAdopterField" /></view>
+      <view class="adoption-field"><text class="adoption-field__label">联系方式</text><input value="{{contact}}" maxlength="60" placeholder="电话或常用联系方式" placeholder-style="color:#a79da0" data-field="contact" bindinput="updateAdopterField" /></view>
+      <view class="adoption-field">
+        <text class="adoption-field__label">当前进度</text>
+        <view class="compact-choice-row"><view wx:for="{{adopterStageOptions}}" wx:key="value" data-stage="{{item.value}}" class="compact-choice {{adopterStage === item.value ? 'compact-choice--active' : ''}}" role="button" bindtap="selectAdopterStage">{{item.label}}</view></view>
+      </view>
+      <view class="adopter-form__submit" role="button" bindtap="addAdopter" hover-class="adopter-form__submit--pressed">保存领养人</view>
+    </view>
+    <view wx:if="{{adopters.length}}" class="adopter-list">
+      <view class="adopter-row" wx:for="{{adopters}}" wx:key="id" data-id="{{item.id}}" role="button" bindtap="manageAdopter">
+        <view class="adopter-row__avatar">{{item.initial}}</view>
+        <view class="adopter-row__copy"><text class="adopter-row__name">{{item.name}}</text><text class="adopter-row__meta">{{item.catName}} · {{item.contact || '联系方式待补充'}}</text></view>
+        <text class="adopter-row__stage {{item.stage === 'adopted' ? 'adopter-row__stage--done' : ''}}">{{item.stageLabel}}</text>
+        <text class="adopter-row__arrow">›</text>
+      </view>
+    </view>
+    <view wx:else class="empty-panel adoption-empty">
+      <text class="empty-panel__title">{{vaultDrafts.length ? '还没有领养人' : '先建立一份档案'}}</text>
+      <text class="empty-panel__body">{{vaultDrafts.length ? '从关联猫咪和记录沟通进度开始。' : '领养记录需要关联具体猫咪后才能继续。'}}</text>
+      <navigator wx:if="{{!vaultDrafts.length}}" class="primary-action adoption-empty__action" url="/package-vault/pages/index/index">新建档案</navigator>
+    </view>
+  </view>
+
+  <view wx:else class="adoption-content">
+    <view class="adoption-section__head"><text class="adoption-section__title">新增回访</text><text class="adoption-section__meta">回访后自动更新待办</text></view>
+    <view class="follow-up-form">
+      <view class="follow-up-picker" role="button" bindtap="chooseFollowUpAdopter"><text class="follow-up-picker__label">回访对象</text><view class="follow-up-picker__value"><text>{{selectedAdopterName || '选择已领养的领养人'}}</text><text>›</text></view></view>
+      <view class="follow-up-grid">
+        <view class="adoption-field"><text class="adoption-field__label">本次回访</text><picker mode="date" value="{{followUpDate}}" end="{{today}}" bindchange="updateFollowUpDate"><view class="date-picker">{{followUpDate}} <text>›</text></view></picker></view>
+        <view class="adoption-field"><text class="adoption-field__label">状态</text><view class="compact-choice-row compact-choice-row--tight"><view wx:for="{{followUpStatusOptions}}" wx:key="value" data-status="{{item.value}}" class="compact-choice compact-choice--small {{followUpStatus === item.value ? 'compact-choice--active' : ''}}" role="button" bindtap="selectFollowUpStatus">{{item.label}}</view></view></view>
+      </view>
+      <view class="follow-up-picker follow-up-picker--date"><text class="follow-up-picker__label">下次回访</text><picker mode="date" value="{{nextFollowUpDate}}" start="{{followUpDate}}" bindchange="updateNextFollowUpDate"><view class="follow-up-picker__value"><text>{{nextFollowUpDate}}</text><text>›</text></view></picker></view>
+      <view class="adoption-field"><text class="adoption-field__label">回访记录</text><textarea value="{{followUpNote}}" maxlength="500" auto-height placeholder="饮食、排泄、精神状态或需要跟进的事项" placeholder-style="color:#a79da0" bindinput="updateFollowUpNote" /></view>
+      <view class="adopter-form__submit" role="button" bindtap="addFollowUp" hover-class="adopter-form__submit--pressed">保存回访</view>
+    </view>
+    <view wx:if="{{followUps.length}}" class="follow-up-list">
+      <view class="follow-up-row" wx:for="{{followUps}}" wx:key="id"><view class="follow-up-row__head"><view><text class="follow-up-row__name">{{item.adopterName}}</text><text class="follow-up-row__cat">{{item.catName}}</text></view><text class="follow-up-row__date">{{item.visitDate}}</text></view><text class="follow-up-row__note">{{item.note}}</text><view class="follow-up-row__foot"><text class="follow-up-row__status {{item.status === 'attention' ? 'follow-up-row__status--attention' : ''}}">{{item.statusLabel}}</text><text class="follow-up-row__next">下次 {{item.nextVisitDate}}</text></view></view>
+    </view>
+    <view wx:else class="empty-panel adoption-empty"><text class="empty-panel__title">还没有回访记录</text><text class="empty-panel__body">完成领养后，选择对象并写下本次近况。</text></view>
+  </view>
+</view>

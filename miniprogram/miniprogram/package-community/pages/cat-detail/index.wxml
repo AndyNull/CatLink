@@ -1,0 +1,86 @@
+<view class="page page--compact page--subpage cat-detail-page">
+  <view class="page__lead cat-detail-lead">
+    <text class="page__eyebrow">PUBLIC CAT PROFILE</text>
+    <text class="page__title">公开档案</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="detail-loading">
+    <image src="/assets/logo.png" mode="aspectFit" />
+    <text>正在加载档案</text>
+  </view>
+
+  <view wx:elif="{{errorMessage}}" class="empty-panel detail-empty">
+    <image class="detail-empty__logo" src="/assets/logo.png" mode="aspectFit" />
+    <text class="empty-panel__title">{{errorMessage}}</text>
+    <view class="secondary-action detail-empty__action" role="button" bindtap="loadDetail">重新加载</view>
+  </view>
+
+  <block wx:elif="{{cat}}">
+    <view class="cat-detail__hero">
+      <image wx:if="{{cat.cover}}" class="cat-detail__cover" src="{{cat.cover}}" mode="aspectFill" />
+      <view wx:else class="cat-detail__cover cat-detail__cover--fallback">
+        <image src="/assets/logo.png" mode="aspectFit" />
+      </view>
+      <view class="cat-detail__headline">
+        <view class="cat-detail__name-wrap">
+          <text class="cat-detail__name">{{cat.displayName}}</text>
+          <text class="cat-detail__status">{{cat.statusLabel}}</text>
+        </view>
+        <text class="cat-detail__location">{{cat.locationLabel}}</text>
+        <text wx:if="{{cat.ownerName}}" class="cat-detail__owner">记录者 {{cat.ownerName}}</text>
+      </view>
+      <view
+        class="cat-detail__follow {{isFollowing ? 'cat-detail__follow--active' : ''}} {{followPending ? 'cat-detail__follow--pending' : ''}}"
+        role="button"
+        aria-label="{{isFollowing ? '取消关注' : '关注'}} {{cat.displayName}}"
+        bindtap="toggleFollow"
+      >
+        <text>{{isFollowing ? '已关注' : '关注'}}</text>
+        <text>{{cat.followCount}}</text>
+      </view>
+    </view>
+
+    <view class="cat-detail__section">
+      <text class="cat-detail__section-title">档案说明</text>
+      <text class="cat-detail__story">{{cat.storyText}}</text>
+      <text wx:if="{{cat.updatedLabel}}" class="cat-detail__updated">最近更新 {{cat.updatedLabel}}</text>
+    </view>
+
+    <view wx:if="{{cat.profileRows.length}}" class="cat-detail__section">
+      <text class="cat-detail__section-title">基础信息</text>
+      <view class="cat-detail__facts">
+        <view wx:for="{{cat.profileRows}}" wx:key="label" class="cat-detail__fact">
+          <text class="cat-detail__fact-label">{{item.label}}</text>
+          <text class="cat-detail__fact-value">{{item.value}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{cat.photos.length}}" class="cat-detail__section">
+      <text class="cat-detail__section-title">更多照片</text>
+      <view class="cat-detail__photos">
+        <image wx:for="{{cat.photos}}" wx:key="*this" class="cat-detail__photo" src="{{item}}" mode="aspectFill" lazy-load />
+      </view>
+    </view>
+
+    <view class="cat-detail__section">
+      <view class="cat-detail__section-head">
+        <text class="cat-detail__section-title">救助动态</text>
+        <text class="cat-detail__timeline-count">{{timeline.length}} 条</text>
+      </view>
+      <view wx:if="{{timeline.length}}" class="cat-detail__timeline">
+        <view wx:for="{{timeline}}" wx:key="id" class="cat-detail__timeline-item">
+          <view class="cat-detail__timeline-mark"></view>
+          <view class="cat-detail__timeline-body">
+            <view class="cat-detail__timeline-head">
+              <text class="cat-detail__timeline-kind">{{item.kindLabel}}</text>
+              <text class="cat-detail__timeline-date">{{item.dateLabel}}</text>
+            </view>
+            <text class="cat-detail__timeline-text">{{item.body}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="cat-detail__timeline-empty">还没有公开的救助动态。</view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,58 @@
+<view class="page page--compact archive-page">
+  <view class="archive-lead-row">
+    <view class="page__lead">
+      <text class="page__eyebrow">PRIVATE VAULT</text>
+      <text class="page__title">所有档案</text>
+      <text class="page__summary">集中管理猫咪档案、健康记录与救助进度。</text>
+    </view>
+    <navigator class="archive-add" url="/package-vault/pages/index/index" aria-label="新建档案">＋</navigator>
+  </view>
+
+  <view class="search-box">
+    <text class="search-box__icon">⌕</text>
+    <input value="{{query}}" placeholder="搜索昵称、花色、标签或地点" confirm-type="search" bindinput="updateQuery" />
+  </view>
+
+  <view class="archive-filters">
+    <scroll-view class="archive-filter-scroll" scroll-x enhanced show-scrollbar="false">
+      <view class="archive-filter-row">
+        <view
+          wx:for="{{primaryFilters}}"
+          wx:key="value"
+          data-filter="{{item.value}}"
+          class="archive-filter {{activeFilter === item.value ? 'archive-filter--active' : ''}}"
+          role="button"
+          bindtap="selectFilter"
+          hover-class="archive-filter--pressed"
+        >{{item.label}}</view>
+        <view class="archive-filter archive-filter--more" role="button" bindtap="openMoreFilters" hover-class="archive-filter--pressed">更多⌄</view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view wx:if="{{visibleDrafts.length}}" class="archive-list">
+    <view class="archive-card" wx:for="{{visibleDrafts}}" wx:key="id" data-id="{{item.id}}" role="button" bindtap="openDraft">
+      <image wx:if="{{item.coverPath}}" class="archive-card__cover" src="{{item.coverPath}}" mode="aspectFill" lazy-load />
+      <view wx:else class="archive-card__cover archive-card__cover--empty"><text>爪</text></view>
+      <view class="archive-card__body">
+        <view class="archive-card__heading">
+          <text class="archive-card__name">{{item.nickname}}</text>
+          <text class="archive-card__status archive-card__status--{{item.status}}">{{item.statusLabel}}</text>
+        </view>
+        <text class="archive-card__meta">{{item.coat || '花色待补充'}} · {{item.genderLabel}}</text>
+        <text wx:if="{{item.region}}" class="archive-card__location">{{item.region}}</text>
+        <view wx:if="{{item.tags.length}}" class="archive-card__tags">
+          <text wx:for="{{item.tags}}" wx:key="*this" class="archive-card__tag">{{item}}</text>
+        </view>
+        <view class="archive-card__actions"><view class="archive-card__archive" role="button" data-id="{{item.id}}" catchtap="archiveDraft" hover-class="archive-card__archive--pressed">移入回收站</view></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-panel archive-empty">
+    <image class="empty-panel__logo" src="/assets/logo.png" mode="aspectFit" />
+    <text class="empty-panel__title">{{hasDrafts ? '没有匹配的档案' : '还没有猫咪档案'}}</text>
+    <text class="empty-panel__body">{{hasDrafts ? '换个关键词或分类再试试。' : '从一张照片和一个名字开始，记录它的救助故事。'}}</text>
+    <navigator wx:if="{{!hasDrafts}}" class="primary-action archive-empty__action" url="/package-vault/pages/index/index">建立第一份档案</navigator>
+  </view>
+</view>

@@ -1,0 +1,64 @@
+<view class="page page--compact page--subpage publish-page">
+  <view class="page__lead">
+    <text class="page__eyebrow">PUBLIC COMMUNITY</text>
+    <text class="page__title">发布动态</text>
+    <text class="page__summary">分享救助进展、领养信息或值得被看见的日常。</text>
+  </view>
+
+  <view class="publish-section">
+    <text class="publish-section__label">动态类型</text>
+    <view class="publish-topics">
+      <view
+        wx:for="{{topicOptions}}"
+        wx:key="value"
+        data-topic="{{item.value}}"
+        class="publish-topic {{topic === item.value ? 'publish-topic--active' : ''}}"
+        role="button"
+        aria-label="选择{{item.label}}动态"
+        bindtap="selectTopic"
+        hover-class="publish-control--pressed"
+      >{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="publish-form">
+    <view class="publish-field">
+      <text class="publish-field__label">标题</text>
+      <input value="{{title}}" maxlength="40" placeholder="用一句话说清这条动态" placeholder-style="color:#a79da0" data-field="title" bindinput="updateField" />
+    </view>
+
+    <view class="publish-field publish-field--body">
+      <view class="publish-field__heading">
+        <text class="publish-field__label">内容</text>
+        <text class="publish-field__count">{{bodyCount}} / 500</text>
+      </view>
+      <textarea value="{{body}}" maxlength="500" auto-height placeholder="记录发现的情况、目前进展，或想和大家交流的内容。" placeholder-style="color:#a79da0" data-field="body" bindinput="updateField" />
+    </view>
+
+    <view class="publish-field">
+      <view class="publish-field__heading">
+        <text class="publish-field__label">图片 <text class="publish-field__optional">选填</text></text>
+        <text class="publish-field__count">{{imagePaths.length}} / {{maxImageCount}}</text>
+      </view>
+      <view class="publish-images">
+        <view wx:for="{{imagePaths}}" wx:key="*this" class="publish-image">
+          <image src="{{item}}" mode="aspectFill" />
+          <view class="publish-image__remove" data-index="{{index}}" role="button" aria-label="移除第{{index + 1}}张图片" bindtap="removeImage">×</view>
+        </view>
+        <view wx:if="{{imagePaths.length < maxImageCount}}" class="publish-image-add" role="button" aria-label="添加图片" bindtap="chooseImages" hover-class="publish-control--pressed">
+          <text class="publish-image-add__mark">+</text>
+          <text>添加图片</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="publish-field">
+      <text class="publish-field__label">地区 <text class="publish-field__optional">选填</text></text>
+      <input value="{{district}}" maxlength="40" placeholder="例如：上海 · 静安" placeholder-style="color:#a79da0" data-field="district" bindinput="updateField" />
+    </view>
+  </view>
+
+  <view class="publish-submit-area">
+    <view class="publish-submit {{publishing ? 'publish-submit--disabled' : ''}}" role="button" aria-label="发布动态" bindtap="publish" hover-class="publish-control--pressed">{{publishing ? '正在发布…' : '发布动态'}}</view>
+  </view>
+</view>

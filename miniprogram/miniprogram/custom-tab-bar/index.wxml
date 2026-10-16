@@ -1,0 +1,12 @@
+<view class="tabbar">
+  <view class="tabbar__notice {{noticeDragging ? 'tabbar__notice--dragging' : ''}}" style="left: {{noticeLeft}}px; top: {{noticeTop}}px;" role="button" bindtap="openNotifications" catchtouchstart="noticeTouchStart" catchtouchmove="noticeTouchMove" catchtouchend="noticeTouchEnd" catchtouchcancel="noticeTouchEnd" aria-label="打开消息中心">
+    <image class="tabbar__notice-icon" src="/assets/icons/notification.svg" mode="aspectFit" />
+    <view wx:if="{{hasUnread}}" class="tabbar__notice-badge" />
+  </view>
+  <view class="tabbar__rail">
+    <view wx:for="{{tabs}}" wx:key="pagePath" class="tabbar__item {{selected === index ? 'tabbar__item--active' : ''}}" data-index="{{index}}" role="button" aria-label="{{item.text}}" bindtap="switchTab">
+      <image class="tabbar__icon" src="{{selected === index ? item.activeIcon : item.icon}}" mode="aspectFit" />
+      <text class="tabbar__label">{{item.text}}</text>
+    </view>
+  </view>
+</view>

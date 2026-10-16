@@ -1,0 +1,18 @@
+.notification-page { gap: 34rpx; }
+.notification-empty { min-height: 340rpx; padding: 48rpx 40rpx; }
+.notification-empty__icon { width: 76rpx; height: 76rpx; padding: 18rpx; border-radius: 22rpx; background: #8b4a5d; }
+.notification-login { display: flex; min-width: 160rpx; height: 72rpx; padding: 0 24rpx; align-items: center; justify-content: center; border-radius: 20rpx; background: #8b4a5d; color: #fff9fa; font-size: 24rpx; font-weight: 600; }
+.notification-list { display: flex; flex-direction: column; gap: 16rpx; }
+.notification-list__header { display: flex; min-height: 54rpx; align-items: center; justify-content: space-between; }
+.notification-list__read { display: flex; min-height: 54rpx; align-items: center; color: #8b4a5d; font-size: 24rpx; font-weight: 600; }
+.notification-card { position: relative; display: flex; min-height: 122rpx; padding: 22rpx 24rpx; gap: 16rpx; border: 1rpx solid #ece4e1; border-radius: 20rpx; background: #fffdfc; }
+.notification-card--unread { border-color: #e3cbd1; background: #fff9fa; }
+.notification-card__dot { width: 12rpx; height: 12rpx; margin-top: 10rpx; flex: none; border-radius: 50%; background: transparent; }
+.notification-card--unread .notification-card__dot { background: #9b4c60; }
+.notification-card__body { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 4rpx; }
+.notification-card__head { display: flex; align-items: center; justify-content: space-between; gap: 18rpx; }
+.notification-card__kind { color: #8b4a5d; font-size: 21rpx; font-weight: 650; }
+.notification-card__time { flex: none; color: #978d90; font-size: 20rpx; }
+.notification-card__title { overflow: hidden; color: #453b3e; font-size: 27rpx; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.notification-card__copy { display: -webkit-box; overflow: hidden; color: #7d7376; font-size: 23rpx; line-height: 1.45; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.notification-card:active, .notification-login:active, .notification-list__read:active { opacity: 0.72; }

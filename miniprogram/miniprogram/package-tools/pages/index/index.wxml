@@ -1,0 +1,44 @@
+<view class="page page--compact page--subpage tools-page {{themeClass}}">
+  <view class="page__lead">
+    <text class="page__eyebrow">RESCUE TOOLS</text>
+    <text class="page__title">统计与工具</text>
+    <text class="page__summary">把档案、领养与回访进度汇总到一起。</text>
+  </view>
+
+  <view class="tools-tabs">
+    <view class="tools-tab {{activeTab === 'stats' ? 'tools-tab--active' : ''}}" data-tab="stats" role="button" bindtap="selectTab" hover-class="tools-control--pressed">数据</view>
+    <view class="tools-tab {{activeTab === 'poster' ? 'tools-tab--active' : ''}}" data-tab="poster" role="button" bindtap="selectTab" hover-class="tools-control--pressed">海报</view>
+    <view class="tools-tab {{activeTab === 'settings' ? 'tools-tab--active' : ''}}" data-tab="settings" role="button" bindtap="selectTab" hover-class="tools-control--pressed">设置</view>
+  </view>
+
+  <view wx:if="{{activeTab === 'stats'}}" class="tools-content tools-content--stats">
+    <view class="tools-section-head"><text class="tools-section-head__title">救助概览</text><text class="tools-section-head__meta">当前汇总</text></view>
+    <view class="tools-stat-grid">
+      <view class="tools-stat" wx:for="{{stats}}" wx:key="label"><view class="tools-stat__head"><view class="tools-stat__icon tone--{{item.tone}}"><image src="{{item.icon}}" mode="aspectFit" /></view><text class="tools-stat__label">{{item.label}}</text></view><text class="tools-stat__value">{{item.value}}</text></view>
+    </view>
+    <view class="tools-section-head tools-section-head--secondary"><text class="tools-section-head__title">协作进度</text><text class="tools-section-head__meta">记录概览</text></view>
+    <view class="tools-summary"><view class="tools-summary__item"><view class="tools-summary__icon tone--apricot"><image src="/assets/icons/action-adoption.svg" mode="aspectFit" /></view><view class="tools-summary__copy"><text class="tools-summary__value">{{adopterCount}}</text><text class="tools-summary__label">已录入领养人</text></view></view><view class="tools-summary__item"><view class="tools-summary__icon tone--mint"><image src="/assets/icons/task-followup.svg" mode="aspectFit" /></view><view class="tools-summary__copy"><text class="tools-summary__value">{{followUpCount}}</text><text class="tools-summary__label">已完成回访</text></view></view></view>
+    <view class="tools-todo">
+      <view class="tools-todo__head"><view><text class="tools-todo__title">近期待办</text><text class="tools-todo__body">按日期排列</text></view><view class="tools-todo__link" role="button" bindtap="openTasks" hover-class="tools-control--pressed"><text>全部</text><text class="tools-todo__link-arrow">›</text></view></view>
+      <view wx:if="{{hasTasks}}" class="tools-todo__list"><view class="tools-todo__row" wx:for="{{taskPreview}}" wx:key="id" data-id="{{item.id}}" role="button" bindtap="openTask" hover-class="tools-control--pressed"><view class="tools-todo__badge tone--{{item.tone}}" role="img" aria-label="{{item.kindLabel}}"><image src="{{item.icon}}" mode="aspectFit" /></view><view class="tools-todo__copy"><text>{{item.title}}</text><text>{{item.detail}}</text></view><text class="tools-todo__date {{item.overdue ? 'tools-todo__date--overdue' : ''}}">{{item.dueLabel}}</text></view></view>
+      <view wx:else class="tools-todo__empty">当前没有待办</view>
+    </view>
+  </view>
+
+  <view wx:elif="{{activeTab === 'poster'}}" class="tools-content">
+    <view wx:if="{{poster}}" class="poster-preview">
+      <image wx:if="{{poster.coverPath}}" class="poster-preview__image" src="{{poster.coverPath}}" mode="aspectFill" />
+      <view wx:else class="poster-preview__fallback">{{poster.initial}}</view>
+      <view class="poster-preview__shade" />
+      <view class="poster-preview__copy"><text class="poster-preview__eyebrow">CATLINK · {{poster.statusLabel}}</text><text class="poster-preview__title">{{poster.nickname}}</text><text wx:if="{{poster.story}}" class="poster-preview__body">{{poster.story}}</text><text wx:elif="{{poster.region}}" class="poster-preview__body">{{poster.region}}</text></view>
+    </view>
+    <view wx:else class="poster-empty"><text class="poster-empty__title">先选择一份档案</text><text class="poster-empty__body">选中后会在这里生成可转发的预览。</text></view>
+    <view wx:if="{{poster}}" class="poster-actions"><view class="tools-secondary" role="button" bindtap="choosePoster" hover-class="tools-control--pressed">更换档案</view><button class="tools-primary tools-primary--share" open-type="share" hover-class="tools-control--pressed">分享海报</button></view>
+    <view wx:else class="tools-primary" role="button" bindtap="choosePoster" hover-class="tools-control--pressed">选择档案制作海报</view>
+  </view>
+
+  <view wx:else class="tools-content">
+    <view class="theme-setting"><view class="theme-setting__head"><view><text class="theme-setting__title">外观主题</text><text class="theme-setting__body">当前已应用：{{selectedTheme}}</text></view><view class="theme-setting__sample {{themePreviewClass}}" /></view><view class="theme-options"><view wx:for="{{themeOptions}}" wx:key="value" class="theme-option {{selectedTheme === item.value ? 'theme-option--active' : ''}}" data-theme="{{item.value}}" role="button" bindtap="selectTheme" hover-class="tools-control--pressed">{{item.value}}</view></view></view>
+    <view class="tools-note"><text class="tools-note__title">海报内容</text><text class="tools-note__body">海报会使用所选档案的封面、名称与已填写资料。</text></view>
+  </view>
+</view>

@@ -1,0 +1,56 @@
+<view class="page home-page">
+  <view class="hero">
+    <text class="page__eyebrow">CATLINK · 救助工作台</text>
+    <text class="page__title">你好，救助人</text>
+    <text class="page__summary">从一份档案开始，把照护、领养和回访接续起来。</text>
+    <navigator class="hero__mark" url="/package-vault/pages/index/index" aria-label="新建猫咪档案"><image class="hero__mark-icon" src="/assets/icons/add.svg" mode="aspectFit" /></navigator>
+  </view>
+
+  <view class="section">
+    <view class="section__header"><text class="section__title">救助概览</text><navigator class="section__link" url="/package-tools/pages/index/index">查看统计　›</navigator></view>
+    <view class="metric-grid">
+      <view class="metric-card" wx:for="{{stats}}" wx:key="label"><view class="metric-card__icon tone--{{item.tone}}" role="img" aria-label="{{item.label}}"><image src="{{item.icon}}" mode="aspectFit" /></view><view class="metric-card__content"><text class="metric-card__value">{{item.value}}</text><text class="metric-card__label">{{item.label}}</text></view></view>
+    </view>
+  </view>
+
+  <view class="quote-panel">
+    <image class="quote-panel__logo" src="/assets/logo.png" mode="aspectFit" />
+    <view class="quote-panel__content">
+      <text class="quote-panel__label">今日份温柔语句</text>
+      <text class="quote-panel__text">{{quote}}</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section__header"><text class="section__title">公开猫咪</text><navigator class="section__link" open-type="switchTab" url="/pages/community/index">去社区看看　›</navigator></view>
+    <scroll-view wx:if="{{hasPublicCats}}" class="home-public-scroll" scroll-x enhanced show-scrollbar="false">
+      <navigator wx:for="{{publicCats}}" wx:key="id" class="home-public-cat" url="/package-community/pages/cat-detail/index?id={{item.id}}">
+        <image wx:if="{{item.cover}}" class="home-public-cat__cover" src="{{item.cover}}" mode="aspectFill" lazy-load />
+        <view wx:else class="home-public-cat__cover home-public-cat__cover--fallback"><image src="/assets/logo.png" mode="aspectFit" /></view>
+        <view class="home-public-cat__body"><text class="home-public-cat__name">{{item.name}}</text><text class="home-public-cat__status">{{item.status}}</text></view>
+        <text class="home-public-cat__arrow">›</text>
+      </navigator>
+    </scroll-view>
+    <view wx:else class="empty-panel home-empty"><image class="empty-panel__logo" src="/assets/logo.png" mode="aspectFit" /><text class="empty-panel__title">暂时没有公开猫咪</text><text class="empty-panel__body">新的公开档案会显示在这里。</text></view>
+  </view>
+
+  <view class="section">
+    <text class="section__title">常用操作</text>
+    <view class="action-grid">
+      <navigator class="action-card home-action" url="/package-vault/pages/index/index"><view class="action-card__icon tone--rose" role="img" aria-label="新建档案"><image src="/assets/icons/add.svg" mode="aspectFit" /></view><view class="action-card__content"><text class="action-card__label">新建档案</text><text class="home-action__hint">记录救助信息</text></view></navigator>
+      <navigator class="action-card home-action" url="/package-adoption/pages/index/index"><view class="action-card__icon tone--apricot" role="img" aria-label="领养回访"><image src="/assets/icons/action-adoption.svg" mode="aspectFit" /></view><view class="action-card__content"><text class="action-card__label">领养回访</text><text class="home-action__hint">维护后续进度</text></view></navigator>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section__header"><text class="section__title">近期待办</text><navigator class="section__link" url="/package-tools/pages/tasks/index">全部待办　›</navigator></view>
+    <view wx:if="{{hasTasks}}" class="home-task-list">
+      <view class="home-task" wx:for="{{tasks}}" wx:key="id" data-id="{{item.id}}" role="button" bindtap="openTask">
+        <view class="home-task__badge tone--{{item.tone}}" role="img" aria-label="{{item.kindLabel}}"><image src="{{item.icon}}" mode="aspectFit" /></view>
+        <view class="home-task__copy"><text class="home-task__title">{{item.title}}</text><text class="home-task__detail">{{item.detail}}</text></view>
+        <view class="home-task__end"><text class="home-task__due {{item.overdue ? 'home-task__due--overdue' : ''}}">{{item.dueLabel}}</text><text class="home-task__arrow">›</text></view>
+      </view>
+    </view>
+    <view wx:else class="empty-panel home-empty"><image class="empty-panel__logo" src="/assets/logo.png" mode="aspectFit" /><text class="empty-panel__title">当前没有待办</text><text class="empty-panel__body">治疗、领养沟通和回访计划会显示在这里。</text></view>
+  </view>
+</view>

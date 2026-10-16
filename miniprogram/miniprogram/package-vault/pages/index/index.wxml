@@ -1,0 +1,129 @@
+<view class="page page--compact page--subpage vault-page">
+  <view class="vault-lead">
+    <view class="page__lead">
+      <text class="page__eyebrow">PRIVATE VAULT</text>
+      <text class="page__title">{{editId ? '编辑档案' : '新建档案'}}</text>
+      <text class="page__summary">{{editId ? '补充当前救助进度，让领养和回访记录保持准确。' : '先记录眼前的情况，后续健康、领养和回访会围绕这份档案展开。'}}</text>
+    </view>
+  </view>
+
+  <view class="section vault-section">
+    <view class="section__header">
+      <text class="section__title">照片</text>
+      <text class="section__meta">封面为必填项</text>
+    </view>
+    <view class="cover-picker" bindtap="chooseCover" aria-label="选择封面照片">
+      <image wx:if="{{coverPath}}" class="cover-picker__image" src="{{coverPath}}" mode="aspectFill" />
+      <view wx:else class="cover-picker__empty">
+        <text class="cover-picker__mark">＋</text>
+        <text class="cover-picker__title">添加封面照片</text>
+        <text class="cover-picker__hint">可从相册选择或直接拍摄</text>
+      </view>
+      <view wx:if="{{coverPath}}" class="cover-picker__overlay">
+        <text>点击更换封面</text>
+        <view class="cover-picker__remove" role="button" catchtap="removeCover" hover-stop-propagation="true" aria-label="移除封面">移除</view>
+      </view>
+    </view>
+
+    <view class="album-grid">
+      <view class="album-item" wx:for="{{albumPaths}}" wx:key="*this">
+        <image class="album-item__image" src="{{item}}" mode="aspectFill" />
+        <view class="album-item__remove" data-index="{{index}}" role="button" catchtap="removeAlbumImage" hover-stop-propagation="true" aria-label="移除第{{index + 1}}张照片">×</view>
+        <view class="album-item__cover {{coverPath === item ? 'album-item__cover--active' : ''}}" data-index="{{index}}" role="button" catchtap="useAlbumAsCover" hover-stop-propagation="true">{{coverPath === item ? '封面' : '设为封面'}}</view>
+      </view>
+      <view class="album-add" role="button" bindtap="chooseAlbum" aria-label="添加相册照片">
+        <text class="album-add__mark">＋</text>
+        <text>{{albumPaths.length}} / {{maxAlbumCount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section vault-section">
+    <view class="section__header">
+      <text class="section__title">基本资料</text>
+      <text class="section__meta">昵称为必填项</text>
+    </view>
+
+    <view class="form-field">
+      <text class="form-field__label">昵称 <text class="form-field__required">*</text></text>
+      <input value="{{nickname}}" maxlength="30" placeholder="先起个临时名字" placeholder-style="color:#a79da0" data-field="nickname" bindinput="updateTextField" />
+    </view>
+
+    <view class="form-field form-field--date">
+      <text class="form-field__label">发现日期</text>
+      <picker mode="date" value="{{discoveredDate}}" end="{{today}}" bindchange="updateDiscoveredDate">
+        <view class="date-control"><text>{{discoveredDate}}</text><text class="date-control__arrow">›</text></view>
+      </picker>
+    </view>
+
+    <view class="choice-field">
+      <text class="form-field__label">档案状态</text>
+      <scroll-view class="choice-scroll" scroll-x enhanced show-scrollbar="false">
+        <view class="choice-row choice-row--single-line">
+          <view wx:for="{{statusOptions}}" wx:key="value" data-status="{{item.value}}" class="choice-chip {{status === item.value ? 'choice-chip--active' : ''}}" role="button" bindtap="selectStatus">{{item.label}}</view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="form-grid">
+      <view class="choice-field form-grid__item">
+        <text class="form-field__label">性别</text>
+        <view class="choice-row choice-row--tight">
+          <view wx:for="{{genderOptions}}" wx:key="value" data-gender="{{item.value}}" class="choice-chip choice-chip--compact {{gender === item.value ? 'choice-chip--active' : ''}}" role="button" bindtap="selectGender">{{item.label}}</view>
+        </view>
+      </view>
+      <view class="choice-field form-grid__item">
+        <text class="form-field__label">绝育</text>
+        <view class="choice-row choice-row--tight">
+          <view wx:for="{{sterilizationOptions}}" wx:key="value" data-sterilization="{{item.value}}" class="choice-chip choice-chip--compact {{sterilization === item.value ? 'choice-chip--active' : ''}}" role="button" bindtap="selectSterilization">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-grid">
+      <view class="form-field form-grid__item">
+        <text class="form-field__label">年龄</text>
+        <input value="{{age}}" maxlength="30" placeholder="约 6 个月" placeholder-style="color:#a79da0" data-field="age" bindinput="updateTextField" />
+      </view>
+      <view class="form-field form-grid__item">
+        <text class="form-field__label">体重</text>
+        <input value="{{weight}}" maxlength="20" placeholder="2.5 kg" placeholder-style="color:#a79da0" data-field="weight" bindinput="updateTextField" />
+      </view>
+    </view>
+
+    <view class="form-field">
+      <text class="form-field__label">健康状况</text>
+      <input value="{{healthSummary}}" maxlength="100" placeholder="已驱虫、待检查或当前治疗情况" placeholder-style="color:#a79da0" data-field="healthSummary" bindinput="updateTextField" />
+    </view>
+
+    <view class="form-field">
+      <text class="form-field__label">毛色</text>
+      <input value="{{coat}}" maxlength="50" placeholder="橘白 · 短毛" placeholder-style="color:#a79da0" data-field="coat" bindinput="updateTextField" />
+    </view>
+    <view class="form-field">
+      <text class="form-field__label">性格</text>
+      <input value="{{personality}}" maxlength="100" placeholder="亲人、怕生、活泼…" placeholder-style="color:#a79da0" data-field="personality" bindinput="updateTextField" />
+    </view>
+    <view class="form-field">
+      <text class="form-field__label">标签</text>
+      <input value="{{tags}}" maxlength="120" placeholder="已疫苗、亲人、怕生" placeholder-style="color:#a79da0" data-field="tags" bindinput="updateTextField" />
+      <text class="form-field__hint">使用逗号分隔，最多保存 12 个标签。</text>
+    </view>
+  </view>
+
+  <view class="section vault-section">
+    <view class="section__header"><text class="section__title">发现与救助</text></view>
+    <view class="form-field">
+      <text class="form-field__label">地区</text>
+      <input value="{{region}}" maxlength="100" placeholder="省 / 市 / 区或常用地点" placeholder-style="color:#a79da0" data-field="region" bindinput="updateTextField" />
+    </view>
+    <view class="form-field form-field--story">
+      <text class="form-field__label">救助故事</text>
+      <textarea value="{{story}}" maxlength="1000" auto-height placeholder="在哪里发现了它？当时是什么情况？" placeholder-style="color:#a79da0" data-field="story" bindinput="updateTextField" />
+    </view>
+  </view>
+
+  <view class="vault-save-area">
+    <button class="primary-action vault-save" loading="{{saving}}" disabled="{{saving}}" hover-class="primary-action--pressed" bindtap="saveDraft">{{saving ? '正在保存…' : (editId ? '保存修改' : '保存档案')}}</button>
+  </view>
+</view>
