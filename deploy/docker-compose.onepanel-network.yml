@@ -1,0 +1,10 @@
+services:
+  backend:
+    networks:
+      - catlink
+      - onepanel
+
+networks:
+  onepanel:
+    external: true
+    name: ${CATLINK_1PANEL_NETWORK:?set CATLINK_1PANEL_NETWORK}

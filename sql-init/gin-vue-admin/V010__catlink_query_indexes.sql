@@ -1,0 +1,26 @@
+SET @schema_name = DATABASE();
+
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_public_cats' AND index_name='idx_cat_public_state_status_updated'), 'SELECT 1', 'ALTER TABLE `cat_public_cats` ADD INDEX `idx_cat_public_state_status_updated` (`state`,`status`,`updated_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_public_cats' AND index_name='idx_cat_public_owner_state_updated'), 'SELECT 1', 'ALTER TABLE `cat_public_cats` ADD INDEX `idx_cat_public_owner_state_updated` (`owner_id`,`state`,`updated_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_posts' AND index_name='idx_cat_posts_author_created'), 'SELECT 1', 'ALTER TABLE `cat_posts` ADD INDEX `idx_cat_posts_author_created` (`author_id`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_posts' AND index_name='idx_cat_posts_locked_created'), 'SELECT 1', 'ALTER TABLE `cat_posts` ADD INDEX `idx_cat_posts_locked_created` (`locked`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_comments' AND index_name='idx_cat_comments_post_created'), 'SELECT 1', 'ALTER TABLE `cat_comments` ADD INDEX `idx_cat_comments_post_created` (`post_id`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_comments' AND index_name='idx_cat_comments_author_created'), 'SELECT 1', 'ALTER TABLE `cat_comments` ADD INDEX `idx_cat_comments_author_created` (`author_id`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_reports' AND index_name='idx_cat_reports_reporter_created'), 'SELECT 1', 'ALTER TABLE `cat_reports` ADD INDEX `idx_cat_reports_reporter_created` (`reporter`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_notifications' AND index_name='idx_cat_notifications_user_created'), 'SELECT 1', 'ALTER TABLE `cat_notifications` ADD INDEX `idx_cat_notifications_user_created` (`to_user`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_messages' AND index_name='idx_cat_messages_conv_created'), 'SELECT 1', 'ALTER TABLE `cat_messages` ADD INDEX `idx_cat_messages_conv_created` (`conv_id`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_messages' AND index_name='idx_cat_messages_sender_created'), 'SELECT 1', 'ALTER TABLE `cat_messages` ADD INDEX `idx_cat_messages_sender_created` (`sender_id`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_media' AND index_name='idx_cat_media_owner_created'), 'SELECT 1', 'ALTER TABLE `cat_media` ADD INDEX `idx_cat_media_owner_created` (`owner_id`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+SET @sql = IF(EXISTS(SELECT 1 FROM information_schema.statistics WHERE table_schema=@schema_name AND table_name='cat_missing_cases' AND index_name='idx_cat_missing_status_created'), 'SELECT 1', 'ALTER TABLE `cat_missing_cases` ADD INDEX `idx_cat_missing_status_created` (`status`,`created_at`)');
+PREPARE stmt FROM @sql; EXECUTE stmt; DEALLOCATE PREPARE stmt;

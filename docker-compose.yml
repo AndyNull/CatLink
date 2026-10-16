@@ -1,0 +1,102 @@
+# CatLink production deployment. MySQL and Redis are supplied by 1Panel.
+name: catlink
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend
+    container_name: catlink-backend
+    restart: unless-stopped
+    init: true
+    environment:
+      TZ: Asia/Shanghai
+      CATLINK_JWT_SIGNING_KEY: ${CATLINK_JWT_SIGNING_KEY:?set CATLINK_JWT_SIGNING_KEY}
+      CATLINK_DB_HOST: ${CATLINK_DB_HOST:?set CATLINK_DB_HOST}
+      CATLINK_DB_PORT: ${CATLINK_DB_PORT:-3306}
+      CATLINK_DB_NAME: ${CATLINK_DB_NAME:-gva}
+      CATLINK_DB_USER: ${CATLINK_DB_USER:?set CATLINK_DB_USER}
+      CATLINK_DB_PASSWORD: ${CATLINK_DB_PASSWORD:?set CATLINK_DB_PASSWORD}
+      CATLINK_USE_REDIS: ${CATLINK_USE_REDIS:-true}
+      CATLINK_REDIS_ADDR: ${CATLINK_REDIS_ADDR:-}
+      CATLINK_REDIS_PASSWORD: ${CATLINK_REDIS_PASSWORD:-}
+      CATLINK_DISABLE_AUTO_MIGRATE: ${CATLINK_DISABLE_AUTO_MIGRATE:-false}
+      CATLINK_OSS_TYPE: ${CATLINK_OSS_TYPE:-}
+      CATLINK_MINIO_ENDPOINT: ${CATLINK_MINIO_ENDPOINT:-}
+      CATLINK_MINIO_ACCESS_KEY: ${CATLINK_MINIO_ACCESS_KEY:-}
+      CATLINK_MINIO_SECRET_KEY: ${CATLINK_MINIO_SECRET_KEY:-}
+      CATLINK_MINIO_BUCKET: ${CATLINK_MINIO_BUCKET:-}
+      CATLINK_MINIO_USE_SSL: ${CATLINK_MINIO_USE_SSL:-true}
+      CATLINK_MINIO_BASE_URL: ${CATLINK_MINIO_BASE_URL:-}
+      CATLINK_S3_BUCKET: ${CATLINK_S3_BUCKET:-}
+      CATLINK_S3_REGION: ${CATLINK_S3_REGION:-}
+      CATLINK_S3_ENDPOINT: ${CATLINK_S3_ENDPOINT:-}
+      CATLINK_S3_ACCESS_KEY: ${CATLINK_S3_ACCESS_KEY:-}
+      CATLINK_S3_SECRET_KEY: ${CATLINK_S3_SECRET_KEY:-}
+      CATLINK_S3_BASE_URL: ${CATLINK_S3_BASE_URL:-}
+      CATLINK_S3_PATH_PREFIX: ${CATLINK_S3_PATH_PREFIX:-catlink}
+      CATLINK_S3_FORCE_PATH_STYLE: ${CATLINK_S3_FORCE_PATH_STYLE:-false}
+      CATLINK_S3_DISABLE_SSL: ${CATLINK_S3_DISABLE_SSL:-false}
+      CATLINK_QINIU_ACCESS_KEY: ${CATLINK_QINIU_ACCESS_KEY:-}
+      CATLINK_QINIU_SECRET_KEY: ${CATLINK_QINIU_SECRET_KEY:-}
+      CATLINK_TENCENT_SECRET_ID: ${CATLINK_TENCENT_SECRET_ID:-}
+      CATLINK_TENCENT_SECRET_KEY: ${CATLINK_TENCENT_SECRET_KEY:-}
+      CATLINK_ALIYUN_ACCESS_KEY_ID: ${CATLINK_ALIYUN_ACCESS_KEY_ID:-}
+      CATLINK_ALIYUN_ACCESS_KEY_SECRET: ${CATLINK_ALIYUN_ACCESS_KEY_SECRET:-}
+      CATLINK_HUAWEI_ACCESS_KEY: ${CATLINK_HUAWEI_ACCESS_KEY:-}
+      CATLINK_HUAWEI_SECRET_KEY: ${CATLINK_HUAWEI_SECRET_KEY:-}
+      CATLINK_R2_ACCOUNT_ID: ${CATLINK_R2_ACCOUNT_ID:-}
+      CATLINK_R2_ACCESS_KEY_ID: ${CATLINK_R2_ACCESS_KEY_ID:-}
+      CATLINK_R2_SECRET_ACCESS_KEY: ${CATLINK_R2_SECRET_ACCESS_KEY:-}
+      CATLINK_WEBDAV_PASSWORD: ${CATLINK_WEBDAV_PASSWORD:-}
+      CATLINK_GEOCODER_URL: ${CATLINK_GEOCODER_URL:-https://nominatim.openstreetmap.org/reverse}
+      CATLINK_IP_GEO_ENDPOINT: ${CATLINK_IP_GEO_ENDPOINT:-}
+      CATLINK_TRUST_IP_GEO_HEADERS: ${CATLINK_TRUST_IP_GEO_HEADERS:-false}
+      CATLINK_TRUSTED_PROXY_CIDRS: ${CATLINK_TRUSTED_PROXY_CIDRS:-172.30.88.0/24}
+      CATLINK_SMTP_PASSWORD: ${CATLINK_SMTP_PASSWORD:-}
+      CATLINK_ENCOURAGEMENT_AI_KEY: ${CATLINK_ENCOURAGEMENT_AI_KEY:-}
+      # 仅首次空库需要管理员时设置；创建后删除此变量并重启。
+      CATLINK_BOOTSTRAP_ADMIN_PASSWORD: ${CATLINK_BOOTSTRAP_ADMIN_PASSWORD:-}
+    volumes:
+      - catlink_uploads:/app/uploads
+      - catlink_logs:/app/log
+      - catlink_config:/app/config-data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - catlink
+    expose:
+      - "8888"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8888/api/ready"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: web
+    container_name: catlink-web
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${CATLINK_BIND_ADDRESS:-0.0.0.0}:${CATLINK_WEB_PORT:-58888}:80"
+    networks:
+      - catlink
+
+networks:
+  catlink:
+    ipam:
+      config:
+        - subnet: ${CATLINK_FRONTEND_SUBNET:-172.30.88.0/24}
+
+volumes:
+  catlink_uploads:
+  catlink_logs:
+  catlink_config:
