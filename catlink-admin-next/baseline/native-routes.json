@@ -1,0 +1,97 @@
+[
+  {
+    "scope": "app-public",
+    "method": "GET",
+    "path": "/api/v1/auth/policy"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/captcha"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/login"
+  },
+  {
+    "scope": "app-public",
+    "method": "POST",
+    "path": "/api/v1/auth/refresh"
+  },
+  {
+    "scope": "app-logout",
+    "method": "POST",
+    "path": "/api/v1/auth/logout"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/auth/getUserInfo"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/account"
+  },
+  {
+    "scope": "app-private",
+    "method": "PATCH",
+    "path": "/api/v1/account"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/account/devices"
+  },
+  {
+    "scope": "app-private",
+    "method": "DELETE",
+    "path": "/api/v1/account/devices/:deviceId"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/account/notifications"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/account/notifications/read"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/auth/notifications"
+  },
+  {
+    "scope": "app-private",
+    "method": "PUT",
+    "path": "/api/v1/auth/notifications/read"
+  },
+  {
+    "scope": "app-authenticated",
+    "method": "POST",
+    "path": "/api/v1/vault/sync"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/vault/enable"
+  },
+  {
+    "scope": "app-private",
+    "method": "POST",
+    "path": "/api/v1/vault/session-key"
+  },
+  {
+    "scope": "app-private",
+    "method": "GET",
+    "path": "/api/v1/vault/session-key"
+  },
+  {
+    "scope": "app-private",
+    "method": "PUT",
+    "path": "/api/v1/vault/recovery-key"
+  }
+]

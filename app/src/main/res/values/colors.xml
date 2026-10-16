@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 启动窗口背景：暖白 -->
+    <color name="launch_background">#FCF9F2</color>
+    <color name="ic_launcher_background">#FCF9F2</color>
+</resources>
